@@ -14,7 +14,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     
     var articleArray = [Article]()
     var imageCache = NSCache()
-    
+    var searchBar: UISearchBar!
     
     //APIのURL
     let entryUrl: String = "https://qiita.com/api/v2/items"
@@ -22,11 +22,31 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        //ナビゲーションに検索バーを追加
+        setupSearchBar()
+        
+        
 //        self.refreshControl = UIRefreshControl()
 //        self.refreshControl?.attributedTitle = NSAttributedString(string: "引っ張って更新")
 //        self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
         getArticles()
         
+    }
+    
+    
+    //ナビゲーションに検索バーを追加
+    private func setupSearchBar() {
+        if let navigationBarFrame = navigationController?.navigationBar.bounds {
+            let searchBar: UISearchBar = UISearchBar(frame: navigationBarFrame)
+            searchBar.delegate = self
+            searchBar.placeholder = "検索キーワード"
+            searchBar.autocapitalizationType = UITextAutocapitalizationType.None
+            searchBar.keyboardType = UIKeyboardType.Default
+            navigationItem.titleView = searchBar
+            navigationItem.titleView?.frame = searchBar.frame
+            self.searchBar = searchBar
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -91,11 +111,19 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
-    //以下参考
+
     // MARK: - search bar delegate
     //キーボードのsearchボタンがタップされた時に呼び出される
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        
+        searchAction()
+    }
+    
+    @IBAction func tapSearchBarButton(sender: UIBarButtonItem) {
+        searchAction()
+    }
+    
+    
+    func searchAction() {
         print("検索した")
         let inputText = searchBar.text
         
@@ -104,13 +132,12 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         
         //パラメータをエンコードしたURLを作成する
         let requestUrl = createRequestUrl(parameter)
-
+        
         //検索を行う
         getSearchResultArticles(requestUrl)
         
         //キーボードを閉じる
         searchBar.resignFirstResponder()
-        
     }
 
 //    //URL作成処理
