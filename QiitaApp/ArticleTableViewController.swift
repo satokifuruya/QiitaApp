@@ -17,21 +17,15 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     var searchBar: UISearchBar!
     
     //APIのURL
-    let entryUrl: String = "https://qiita.com/api/v2/items"
+    let baseUrl: String = "https://qiita.com/api/v2/items"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        //ナビゲーションに検索バーを追加
         setupSearchBar()
-        
-        
-//        self.refreshControl = UIRefreshControl()
-//        self.refreshControl?.attributedTitle = NSAttributedString(string: "引っ張って更新")
-//        self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
-        getArticles()
-        
+        setupRefreshControl()
+        getArticles(baseUrl)
+//        getDammyArticles()
     }
     
     
@@ -49,46 +43,40 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
+    private func setupRefreshControl(){
+        self.refreshControl = UIRefreshControl()
+//        self.refreshControl?.attributedTitle = NSAttributedString(string: "引っ張って更新")
+        self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
     func refresh() {
         print("call refresh.")
-        getArticles()
-        self.refreshControl?.endRefreshing()
-        dispatch_async(dispatch_get_main_queue(), {
-            self.tableView.reloadData()
-        })
-    }
-    
-    
-    func getArticles() {
-        print("getArticles 呼ばれた")
-        Alamofire.request(.GET, entryUrl)
-            .responseJSON { response in
-                guard let object = response.result.value else {
-                    return
-                }
-                
-                self.articleArray.removeAll()
-                let json = JSON(object)
-                json.forEach { (_, json) in
-                    let article = Article()
-                    article.title = json["title"].string!
-                    article.articleUrl = json["url"].string!
-                    article.userId = json["user"]["id"].string!
-                    article.iconImageUrl = json["user"]["profile_image_url"].string!
-                    self.articleArray.append(article)
-                }
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.tableView.reloadData()
-                })
+        guard let inputText = searchBar.text else {
+            getArticles(baseUrl)
+            self.refreshControl?.endRefreshing()
+            return
         }
+        
+        
+        //検索バーに0文字以上入っていたら、検索してリフレッシュ
+        if inputText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+            let parameter = ["query":inputText]
+            let requestUrl = createRequestUrl(parameter)
+            getArticles(requestUrl)
+        } else {
+            getArticles(baseUrl)
+        }
+        
+        self.refreshControl?.endRefreshing()
     }
     
-    func getSearchResultArticles(requestUrl: String) {
-        print("検索 呼ばれた")
+    
+    func getArticles(requestUrl: String) {
         Alamofire.request(.GET, requestUrl)
             .responseJSON { response in
                 guard let object = response.result.value else {
@@ -111,6 +99,21 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
+    //ダミー用のメソッド
+    func getDammyArticles() {
+        self.articleArray.removeAll()
+        for i in 1...10 {
+            let article = Article()
+            article.title = "ダミータイトル \(i)"
+            article.articleUrl = "https://www.google.co.jp/"
+            article.userId = "ダミーユーザー \(i)"
+            article.iconImageUrl = "https://qiita-image-store.s3.amazonaws.com/0/88/profile-images/1473684075"
+            self.articleArray.append(article)
+        }
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableView.reloadData()
+        })
+    }
 
     // MARK: - search bar delegate
     //キーボードのsearchボタンがタップされた時に呼び出される
@@ -122,11 +125,10 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         searchAction()
     }
     
-    
-    func searchAction() {
-        print("検索した")
+    //検索ボタンが押された時の処理
+    private func searchAction() {
+
         let inputText = searchBar.text
-        
         //パラメータを指定する
         let parameter = ["query":inputText]
         
@@ -134,13 +136,13 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         let requestUrl = createRequestUrl(parameter)
         
         //検索を行う
-        getSearchResultArticles(requestUrl)
+        getArticles(requestUrl)
         
         //キーボードを閉じる
         searchBar.resignFirstResponder()
     }
 
-//    //URL作成処理
+    //URL作成処理
     func createRequestUrl(parameter :[String:String?]) -> String {
         var parameterString = ""
         for key in parameter.keys {
@@ -159,7 +161,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
                 }
             }
         }
-        let requestUrl = entryUrl + "?" + parameterString
+        let requestUrl = baseUrl + "?" + parameterString
         return requestUrl
     }
 
@@ -167,7 +169,6 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Table view data source
     //テーブルセルの取得処理
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("テーブル描画呼ばれた")
         let cell = tableView.dequeueReusableCellWithIdentifier("articleCell", forIndexPath: indexPath) as! ArticleTableViewCell
         let article = articleArray[indexPath.row]
         cell.titleLabel.text = article.title
