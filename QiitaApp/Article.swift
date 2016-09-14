@@ -9,8 +9,8 @@
 import UIKit
 
 class Article: NSObject {
-    var title :String?
-    var iconImageUrl :String?
-    var userId :String?
-    var articleUrl :String?
+    var title = ""
+    var iconImageUrl  = ""
+    var userId  = ""
+    var articleUrl  = "https://qiita-image-store.s3.amazonaws.com/0/88/profile-images/1473684075"
 }

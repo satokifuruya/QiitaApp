@@ -48,7 +48,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     
     private func setupRefreshControl(){
         self.refreshControl = UIRefreshControl()
-        //self.refreshControl?.attributedTitle = NSAttributedString(string: "引っ張って更新")
+        //self.refreshControl?.attributedTitle = NSAttributedString(string: "更新中…")
         self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
 
     }
@@ -89,10 +89,10 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
                 let json = JSON(object)
                 json.forEach { (_, json) in
                     let article = Article()
-                    article.title = json["title"].string!
-                    article.articleUrl = json["url"].string!
-                    article.userId = json["user"]["id"].string!
-                    article.iconImageUrl = json["user"]["profile_image_url"].string!
+                    article.title = json["title"].stringValue
+                    article.articleUrl = json["url"].stringValue
+                    article.userId = json["user"]["id"].stringValue
+                    article.iconImageUrl = json["user"]["profile_image_url"].stringValue
                     self.articleArray.append(article)
                 }
                 dispatch_async(dispatch_get_main_queue(), {
@@ -178,34 +178,34 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         
         //画像処理↓
         //画像がまだ設定されていない場合に処理を行なう
-        if let iconImageUrl = article.iconImageUrl {
-            //キャッシュの画像を取り出す
-            if let cacheImage = imageCache.objectForKey(iconImageUrl) as? UIImage {
-                //キャッシュの画像を設定
-                cell.iconImage.image = cacheImage
-            } else {
-                //画像のダウンロード処理
-                let session = NSURLSession.sharedSession()
-                if let url = NSURL(string: iconImageUrl){
-                    let request = NSURLRequest(URL: url)
-                    let task = session.dataTaskWithRequest(
-                        request, completionHandler: {
-                            (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                            if let data = data {
-                                if let image = UIImage(data: data) {
-                                    //ダウンロードした画像をキャッシュに登録しておく
-                                    self.imageCache.setObject(image, forKey: iconImageUrl)
-                                    //画像はメインスレッド上で設定する
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        cell.iconImage.image = image
-                                    })
-                                }
+        let iconImageUrl = article.iconImageUrl
+        //キャッシュの画像を取り出す
+        if let cacheImage = imageCache.objectForKey(iconImageUrl) as? UIImage {
+            //キャッシュの画像を設定
+            cell.iconImage.image = cacheImage
+        } else {
+            //画像のダウンロード処理
+            let session = NSURLSession.sharedSession()
+            if let url = NSURL(string: iconImageUrl){
+                let request = NSURLRequest(URL: url)
+                let task = session.dataTaskWithRequest(
+                    request, completionHandler: {
+                        (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
+                        if let data = data {
+                            if let image = UIImage(data: data) {
+                                //ダウンロードした画像をキャッシュに登録しておく
+                                self.imageCache.setObject(image, forKey: iconImageUrl)
+                                //画像はメインスレッド上で設定する
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    cell.iconImage.image = image
+                                })
                             }
-                    })
-                    //画像の読み込み処理開始
-                    task.resume()
-                }
+                        }
+                })
+                //画像の読み込み処理開始
+                task.resume()
             }
+        
         }
         //画像ここまで
         return cell
