@@ -14,40 +14,72 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     
     var articleArray = [Article]()
     var imageCache = NSCache()
-    
+    var searchBar: UISearchBar!
     
     //APIのURL
-    let entryUrl: String = "https://qiita.com/api/v2/items"
+    let baseUrl: String = "https://qiita.com/api/v2/items"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.refreshControl = UIRefreshControl()
-//        self.refreshControl?.attributedTitle = NSAttributedString(string: "引っ張って更新")
-//        self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
-        getArticles()
+        setupSearchBar()
+        setupRefreshControl()
+        getArticles(baseUrl)
         
+        //Qiita Apiの利用制限(ユーザー認証させないと60回/h)に引っかからない用
+        //あとで、引っかかった後安全に終了させる処理も書かなきゃ
+        //getDammyArticles()
+    }
+    
+    
+    //ナビゲーションに検索バーを追加
+    private func setupSearchBar() {
+        if let navigationBarFrame = navigationController?.navigationBar.bounds {
+            let searchBar: UISearchBar = UISearchBar(frame: navigationBarFrame)
+            searchBar.delegate = self
+            searchBar.placeholder = "検索キーワード"
+            searchBar.autocapitalizationType = UITextAutocapitalizationType.None
+            searchBar.keyboardType = UIKeyboardType.Default
+            navigationItem.titleView = searchBar
+            navigationItem.titleView?.frame = searchBar.frame
+            self.searchBar = searchBar
+        }
+    }
+    
+    private func setupRefreshControl(){
+        self.refreshControl = UIRefreshControl()
+        //self.refreshControl?.attributedTitle = NSAttributedString(string: "引っ張って更新")
+        self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
+    
+    // TODO 多分、分岐減らせるから改善したい
     func refresh() {
         print("call refresh.")
-        getArticles()
-        self.refreshControl?.endRefreshing()
-        dispatch_async(dispatch_get_main_queue(), {
-            self.tableView.reloadData()
-        })
+        guard let inputText = searchBar.text else {
+            getArticles(baseUrl)
+            self.refreshControl?.endRefreshing()
+            return
+        }
         
-    
+        //検索バーに0文字以上入っていたら、検索してリフレッシュ
+        if inputText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+            searchAction()
+        } else {
+            getArticles(baseUrl)
+        }
+        
+        self.refreshControl?.endRefreshing()
     }
     
     
-    func getArticles() {
-        print("getArticles 呼ばれた")
-        Alamofire.request(.GET, "https://qiita.com/api/v2/items")
+    func getArticles(requestUrl: String) {
+        Alamofire.request(.GET, requestUrl)
             .responseJSON { response in
                 guard let object = response.result.value else {
                     return
@@ -69,167 +101,74 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
-    //以下参考
+    //ダミー用のメソッド()
+    func getDammyArticles() {
+        self.articleArray.removeAll()
+        for i in 1...10 {
+            let article = Article()
+            article.title = "ダミータイトル \(i)"
+            article.articleUrl = "https://www.google.co.jp/"
+            article.userId = "ダミーユーザー \(i)"
+            article.iconImageUrl = "https://qiita-image-store.s3.amazonaws.com/0/88/profile-images/1473684075"
+            self.articleArray.append(article)
+        }
+        dispatch_async(dispatch_get_main_queue(), {
+            self.tableView.reloadData()
+        })
+    }
+
     // MARK: - search bar delegate
     //キーボードのsearchボタンがタップされた時に呼び出される
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        
-        print("検索した")
+        searchAction()
+    }
+    
+    @IBAction func tapSearchBarButton(sender: UIBarButtonItem) {
+        searchAction()
+    }
+    
+    //検索ボタンが押された時の処理
+    private func searchAction() {
+
         let inputText = searchBar.text
+        //パラメータを指定する
+        let parameter = ["query":inputText]
+        //パラメータをエンコードしたURLを作成する
+        let requestUrl = createRequestUrl(parameter)
+        //検索を行う
+        getArticles(requestUrl)
         
-        getArticles()
-        
-//        if inputText?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-//                        //保持している商品を一旦削除
-//            articleArray.removeAll()
-//            
-//            //パラメータを指定する
-//            let parameter = ["appid":appid, "query":inputText]
-//            
-//            //パラメータをエンコードしたURLを作成する
-//            let requestUrl = createRequestUrl(parameter)
-//            
-//            //APIをリクエストする
-//            request(requestUrl)
-//        }
         //キーボードを閉じる
         searchBar.resignFirstResponder()
-        
     }
-//        //商品検索を行なう
-//        let inputText = searchBar.text
-//        //入力文字数が0文字以上かどうかチェックする
-//        if inputText?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-//            //保持している商品を一旦削除
-//            itemDataArray.removeAll()
-//            
-//            //パラメータを指定する
-//            let parameter = ["appid":appid, "query":inputText]
-//            
-//            //パラメータをエンコードしたURLを作成する
-//            let requestUrl = createRequestUrl(parameter)
-//            
-//            //APIをリクエストする
-//            request(requestUrl)
-//        }
-//        //キーボードを閉じる
-//        searchBar.resignFirstResponder()
-//    }
-//    
-//    //URL作成処理
-//    func createRequestUrl(parameter :[String:String?]) -> String {
-//        var parameterString = ""
-//        for key in parameter.keys {
-//            if let value = parameter[key] {
-//                //既にパラメータが設定されていた場合
-//                if parameterString.lengthOfBytesUsingEncoding(
-//                    NSUTF8StringEncoding) > 0 {
-//                    parameterString += "&"
-//                }
-//                
-//                //値をエンコードする
-//                if let escapedValue =
-//                    value!.stringByAddingPercentEncodingWithAllowedCharacters(
-//                        NSCharacterSet.URLQueryAllowedCharacterSet()) {
-//                    parameterString += "\(key)=\(escapedValue)"
-//                }
-//            }
-//        }
-//        let requestUrl = entryUrl + "?" + parameterString
-//        return requestUrl
-//    }
-//    
-//    //リクエストを行なう
-//    func request(requestUrl: String) {
-//        //商品検索APIをコールして商品検索を行なう
-//        let session = NSURLSession.sharedSession()
-//        
-//        if let url = NSURL(string: requestUrl){
-//            let request = NSURLRequest(URL: url)
-//            
-//            let task = session.dataTaskWithRequest(request, completionHandler: {
-//                (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-//                //エラーチェック
-//                if error != nil {
-//                    //エラー表示
-//                    let alert = UIAlertController(title: "エラー",
-//                        message: error?.description,
-//                        preferredStyle: UIAlertControllerStyle.Alert)
-//                    //UIに関する処理はメインスレッド上で行なう
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        self.presentViewController(alert, animated: true, completion: nil)
-//                    })
-//                    return
-//                }
-//                
-//                //Jsonで返却されたデータをパースして格納する
-//                if let data = data {
-//                    let jsonData = try! NSJSONSerialization.JSONObjectWithData(
-//                        data, options: NSJSONReadingOptions.AllowFragments)
-//                    
-//                    //データのパース処理
-//                    if let resultSet = jsonData["ResultSet"] as? [String:AnyObject] {
-//                        self.parseData(resultSet)
-//                    }
-//                    
-//                    //テーブルの描画処理を実施
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        self.tableView.reloadData()
-//                    })
-//                }
-//            })
-//            task.resume()
-//        }
-//    }
-//    
-//    //検索結果をパースして商品リストを作成する
-//    func parseData(resultSet: [String:AnyObject]) {
-//        if let firstObject = resultSet["0"] as? [String:AnyObject] {
-//            if let results = firstObject["Result"] as? [String:AnyObject] {
-//                for key in results.keys.sort() {
-//                    
-//                    //Requestのキーは無視する
-//                    if key == "Request" {
-//                        continue
-//                    }
-//                    
-//                    //商品アイテム取得処理
-//                    if let result = results[key] as? [String:AnyObject] {
-//                        //商品データ格納オブジェクト作成
-//                        let itemData = ItemData()
-//                        
-//                        //画像を格納
-//                        if let itemImageDic = result["Image"] as? [String:AnyObject] {
-//                            let itemImageUrl = itemImageDic["Medium"] as? String
-//                            itemData.itemImageUrl = itemImageUrl
-//                        }
-//                        
-//                        //商品タイトルを格納
-//                        let itemTitle = result["Name"] as? String //商品名
-//                        itemData.itemTitle = itemTitle
-//                        
-//                        //商品価格を格納
-//                        if let itemPriceDic = result["Price"] as? [String:AnyObject] {
-//                            let itemPrice = itemPriceDic["_value"] as? String
-//                            itemData.itemPrice = itemPrice
-//                        }
-//                        
-//                        //商品のURLを格納
-//                        let itemUrl = result["Url"] as? String
-//                        itemData.itemUrl = itemUrl
-//                        
-//                        //商品リストに追加
-//                        self.itemDataArray.append(itemData)
-//                    }
-//                }
-//            }
-//        }
-//    }
+
+    //URL作成処理
+    func createRequestUrl(parameter :[String:String?]) -> String {
+        var parameterString = ""
+        for key in parameter.keys {
+            if let value = parameter[key] {
+                //既にパラメータが設定されていた場合
+                if parameterString.lengthOfBytesUsingEncoding(
+                    NSUTF8StringEncoding) > 0 {
+                    parameterString += "&"
+                }
+                
+                //値をエンコードする
+                if let escapedValue =
+                    value!.stringByAddingPercentEncodingWithAllowedCharacters(
+                        NSCharacterSet.URLQueryAllowedCharacterSet()) {
+                    parameterString += "\(key)=\(escapedValue)"
+                }
+            }
+        }
+        let requestUrl = baseUrl + "?" + parameterString
+        return requestUrl
+    }
+
     
     // MARK: - Table view data source
     //テーブルセルの取得処理
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print("テーブル描画呼ばれた")
         let cell = tableView.dequeueReusableCellWithIdentifier("articleCell", forIndexPath: indexPath) as! ArticleTableViewCell
         let article = articleArray[indexPath.row]
         cell.titleLabel.text = article.title
@@ -269,7 +208,6 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
             }
         }
         //画像ここまで
-
         return cell
     }
     
