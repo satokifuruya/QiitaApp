@@ -1,4 +1,4 @@
-//
+
 //  ArticleTableViewTableViewController.swift
 //  QiitaApp
 //
@@ -16,7 +16,7 @@ import SwiftyJSON
 
 class ArticleTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     weak var customDelegate: ArticleTableViewDelegate?
-    var refreshControl: UIRefreshControl = UIRefreshControl()
+//    var refreshControl: UIRefreshControl = UIRefreshControl()
     
     var articles:Array<Article> = []
     
@@ -29,6 +29,7 @@ class ArticleTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
         
         self.delegate = self
         self.dataSource = self
+
         
         self.registerNib(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
     }
@@ -45,11 +46,14 @@ class ArticleTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
     
     //セル内容
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("tableViewがよばれた")
         let cell = tableView.dequeueReusableCellWithIdentifier("ArticleTableViewCell", forIndexPath: indexPath) as! ArticleTableViewCell
         cell.iconImage.image = UIImage(named: "iphone")
         let article = self.articles[indexPath.row]
+        print(article.title)
         cell.titleLabel.text = article.title
         cell.userIdLabel.text = article.userId
+        
         
         //画像処理↓
         //画像がまだ設定されていない場合に処理を行なう
@@ -99,14 +103,44 @@ class ArticleTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
     }
     
     func refresh(){
-        print("call refresh.")
-        getArticles()
-        self.refreshControl.endRefreshing()
+//        print("call refresh.")
+//        getArticles()
+//        self.refreshControl.endRefreshing()
     }
     
-    func getArticles() {
-        print("呼ばれた")
-        Alamofire.request(.GET, "https://qiita.com/api/v2/items")
+    func serchArticles(){
+        print("call 検索.")
+//        getArticles()
+    }
+    
+//    func getArticles() {
+//        print("getArticles 呼ばれた")
+//        Alamofire.request(.GET, "https://qiita.com/api/v2/items")
+//            .responseJSON { response in
+//                guard let object = response.result.value else {
+//                    return
+//                }
+//                
+//                self.articles.removeAll()
+//                let json = JSON(object)
+//                json.forEach { (_, json) in
+//                    let article = Article()
+//                    article.title = json["title"].string!
+//                    article.articleUrl = json["url"].string!
+//                    article.userId = json["user"]["id"].string!
+//                    article.iconImageUrl = json["user"]["profile_image_url"].string!
+//                    self.articles.append(article)
+//                }
+//                
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.reloadData()
+//                })
+//        }
+//    }
+    
+    func getSearchResultArticles() {
+        print("getSearchResultArticles 呼ばれた")
+        Alamofire.request(.GET, "https://qiita.com/api/v2/items?page=1&per_page=20&query=qiita+user%3Ayaotti")
             .responseJSON { response in
                 guard let object = response.result.value else {
                     return
@@ -116,15 +150,15 @@ class ArticleTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
                 let json = JSON(object)
                 json.forEach { (_, json) in
                     let article = Article()
-                    article.title = json["title"].string!
+                    article.title = "たかし" //json["title"].string!
                     article.articleUrl = json["url"].string!
                     article.userId = json["user"]["id"].string!
                     article.iconImageUrl = json["user"]["profile_image_url"].string!
                     self.articles.append(article)
                 }
-                
                 dispatch_async(dispatch_get_main_queue(), {
                     self.reloadData()
+                    print( self.articles[0].title )
                 })
         }
     }
