@@ -24,10 +24,9 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         
         setupSearchBar()
         setupRefreshControl()
-        getArticles(baseUrl)
+        getArticles()
         
         //Qiita Apiの利用制限(ユーザー認証させないと60回/h)に引っかからない用
-        //あとで、引っかかった後安全に終了させる処理も書かなきゃ
         //getDammyArticles()
     }
     
@@ -49,7 +48,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     private func setupRefreshControl(){
         self.refreshControl = UIRefreshControl()
         //self.refreshControl?.attributedTitle = NSAttributedString(string: "更新中…")
-        self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refreshTable), forControlEvents: UIControlEvents.ValueChanged)
 
     }
     
@@ -58,33 +57,40 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     
-    // TODO 多分、分岐減らせるから改善したい
-    func refresh() {
+    func refreshTable() {
         print("call refresh.")
-        guard let inputText = searchBar.text else {
-            getArticles(baseUrl)
-            self.refreshControl?.endRefreshing()
-            return
-        }
-        
-        //検索バーに0文字以上入っていたら、検索してリフレッシュ
-        if inputText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-            searchAction()
-        } else {
-            getArticles(baseUrl)
-        }
-        
+        getArticles()
         self.refreshControl?.endRefreshing()
     }
     
     
-    func getArticles(requestUrl: String) {
+    //検索バーに1文字以上あれば検索
+    func getArticles() {
+        guard let inputText = searchBar.text else {
+            getArticlesWithQuery(nil)
+            return
+        }
+        
+        if inputText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+            getArticlesWithQuery(inputText)
+        } else {
+            getArticlesWithQuery(nil)
+        }
+    }
+    
+    // 引数がnilならbaseUrlのまま、引数が入っていたら検索クエリとしてエンコードしたurlで記事を取得
+    private func getArticlesWithQuery(query: String?) {
+        var requestUrl = baseUrl
+        if let _ = query {
+            let parameter = ["query": query]
+            requestUrl = createRequestUrl(parameter)
+        }
+        
         Alamofire.request(.GET, requestUrl)
             .responseJSON { response in
                 guard let object = response.result.value else {
                     return
                 }
-                
                 self.articleArray.removeAll()
                 let json = JSON(object)
                 json.forEach { (_, json) in
@@ -120,27 +126,15 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - search bar delegate
     //キーボードのsearchボタンがタップされた時に呼び出される
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        searchAction()
+        getArticles()
+        searchBar.resignFirstResponder()
     }
     
     @IBAction func tapSearchBarButton(sender: UIBarButtonItem) {
-        searchAction()
-    }
-    
-    //検索ボタンが押された時の処理
-    private func searchAction() {
-
-        let inputText = searchBar.text
-        //パラメータを指定する
-        let parameter = ["query":inputText]
-        //パラメータをエンコードしたURLを作成する
-        let requestUrl = createRequestUrl(parameter)
-        //検索を行う
-        getArticles(requestUrl)
-        
-        //キーボードを閉じる
+        getArticles()
         searchBar.resignFirstResponder()
     }
+    
 
     //URL作成処理
     func createRequestUrl(parameter :[String:String?]) -> String {
