@@ -40,14 +40,36 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         dispatch_async(dispatch_get_main_queue(), {
             self.tableView.reloadData()
         })
-        
-    
     }
     
     
     func getArticles() {
         print("getArticles 呼ばれた")
-        Alamofire.request(.GET, "https://qiita.com/api/v2/items")
+        Alamofire.request(.GET, entryUrl)
+            .responseJSON { response in
+                guard let object = response.result.value else {
+                    return
+                }
+                
+                self.articleArray.removeAll()
+                let json = JSON(object)
+                json.forEach { (_, json) in
+                    let article = Article()
+                    article.title = json["title"].string!
+                    article.articleUrl = json["url"].string!
+                    article.userId = json["user"]["id"].string!
+                    article.iconImageUrl = json["user"]["profile_image_url"].string!
+                    self.articleArray.append(article)
+                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                })
+        }
+    }
+    
+    func getSearchResultArticles(requestUrl: String) {
+        print("検索 呼ばれた")
+        Alamofire.request(.GET, requestUrl)
             .responseJSON { response in
                 guard let object = response.result.value else {
                     return
@@ -77,154 +99,43 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         print("検索した")
         let inputText = searchBar.text
         
-        getArticles()
+        //パラメータを指定する
+        let parameter = ["query":inputText]
         
-//        if inputText?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-//                        //保持している商品を一旦削除
-//            articleArray.removeAll()
-//            
-//            //パラメータを指定する
-//            let parameter = ["appid":appid, "query":inputText]
-//            
-//            //パラメータをエンコードしたURLを作成する
-//            let requestUrl = createRequestUrl(parameter)
-//            
-//            //APIをリクエストする
-//            request(requestUrl)
-//        }
+        //パラメータをエンコードしたURLを作成する
+        let requestUrl = createRequestUrl(parameter)
+
+        //検索を行う
+        getSearchResultArticles(requestUrl)
+        
         //キーボードを閉じる
         searchBar.resignFirstResponder()
         
     }
-//        //商品検索を行なう
-//        let inputText = searchBar.text
-//        //入力文字数が0文字以上かどうかチェックする
-//        if inputText?.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-//            //保持している商品を一旦削除
-//            itemDataArray.removeAll()
-//            
-//            //パラメータを指定する
-//            let parameter = ["appid":appid, "query":inputText]
-//            
-//            //パラメータをエンコードしたURLを作成する
-//            let requestUrl = createRequestUrl(parameter)
-//            
-//            //APIをリクエストする
-//            request(requestUrl)
-//        }
-//        //キーボードを閉じる
-//        searchBar.resignFirstResponder()
-//    }
-//    
+
 //    //URL作成処理
-//    func createRequestUrl(parameter :[String:String?]) -> String {
-//        var parameterString = ""
-//        for key in parameter.keys {
-//            if let value = parameter[key] {
-//                //既にパラメータが設定されていた場合
-//                if parameterString.lengthOfBytesUsingEncoding(
-//                    NSUTF8StringEncoding) > 0 {
-//                    parameterString += "&"
-//                }
-//                
-//                //値をエンコードする
-//                if let escapedValue =
-//                    value!.stringByAddingPercentEncodingWithAllowedCharacters(
-//                        NSCharacterSet.URLQueryAllowedCharacterSet()) {
-//                    parameterString += "\(key)=\(escapedValue)"
-//                }
-//            }
-//        }
-//        let requestUrl = entryUrl + "?" + parameterString
-//        return requestUrl
-//    }
-//    
-//    //リクエストを行なう
-//    func request(requestUrl: String) {
-//        //商品検索APIをコールして商品検索を行なう
-//        let session = NSURLSession.sharedSession()
-//        
-//        if let url = NSURL(string: requestUrl){
-//            let request = NSURLRequest(URL: url)
-//            
-//            let task = session.dataTaskWithRequest(request, completionHandler: {
-//                (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-//                //エラーチェック
-//                if error != nil {
-//                    //エラー表示
-//                    let alert = UIAlertController(title: "エラー",
-//                        message: error?.description,
-//                        preferredStyle: UIAlertControllerStyle.Alert)
-//                    //UIに関する処理はメインスレッド上で行なう
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        self.presentViewController(alert, animated: true, completion: nil)
-//                    })
-//                    return
-//                }
-//                
-//                //Jsonで返却されたデータをパースして格納する
-//                if let data = data {
-//                    let jsonData = try! NSJSONSerialization.JSONObjectWithData(
-//                        data, options: NSJSONReadingOptions.AllowFragments)
-//                    
-//                    //データのパース処理
-//                    if let resultSet = jsonData["ResultSet"] as? [String:AnyObject] {
-//                        self.parseData(resultSet)
-//                    }
-//                    
-//                    //テーブルの描画処理を実施
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        self.tableView.reloadData()
-//                    })
-//                }
-//            })
-//            task.resume()
-//        }
-//    }
-//    
-//    //検索結果をパースして商品リストを作成する
-//    func parseData(resultSet: [String:AnyObject]) {
-//        if let firstObject = resultSet["0"] as? [String:AnyObject] {
-//            if let results = firstObject["Result"] as? [String:AnyObject] {
-//                for key in results.keys.sort() {
-//                    
-//                    //Requestのキーは無視する
-//                    if key == "Request" {
-//                        continue
-//                    }
-//                    
-//                    //商品アイテム取得処理
-//                    if let result = results[key] as? [String:AnyObject] {
-//                        //商品データ格納オブジェクト作成
-//                        let itemData = ItemData()
-//                        
-//                        //画像を格納
-//                        if let itemImageDic = result["Image"] as? [String:AnyObject] {
-//                            let itemImageUrl = itemImageDic["Medium"] as? String
-//                            itemData.itemImageUrl = itemImageUrl
-//                        }
-//                        
-//                        //商品タイトルを格納
-//                        let itemTitle = result["Name"] as? String //商品名
-//                        itemData.itemTitle = itemTitle
-//                        
-//                        //商品価格を格納
-//                        if let itemPriceDic = result["Price"] as? [String:AnyObject] {
-//                            let itemPrice = itemPriceDic["_value"] as? String
-//                            itemData.itemPrice = itemPrice
-//                        }
-//                        
-//                        //商品のURLを格納
-//                        let itemUrl = result["Url"] as? String
-//                        itemData.itemUrl = itemUrl
-//                        
-//                        //商品リストに追加
-//                        self.itemDataArray.append(itemData)
-//                    }
-//                }
-//            }
-//        }
-//    }
+    func createRequestUrl(parameter :[String:String?]) -> String {
+        var parameterString = ""
+        for key in parameter.keys {
+            if let value = parameter[key] {
+                //既にパラメータが設定されていた場合
+                if parameterString.lengthOfBytesUsingEncoding(
+                    NSUTF8StringEncoding) > 0 {
+                    parameterString += "&"
+                }
+                
+                //値をエンコードする
+                if let escapedValue =
+                    value!.stringByAddingPercentEncodingWithAllowedCharacters(
+                        NSCharacterSet.URLQueryAllowedCharacterSet()) {
+                    parameterString += "\(key)=\(escapedValue)"
+                }
+            }
+        }
+        let requestUrl = entryUrl + "?" + parameterString
+        return requestUrl
+    }
+
     
     // MARK: - Table view data source
     //テーブルセルの取得処理
@@ -269,7 +180,6 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
             }
         }
         //画像ここまで
-
         return cell
     }
     
