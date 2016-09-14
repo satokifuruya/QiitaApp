@@ -25,7 +25,10 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         setupSearchBar()
         setupRefreshControl()
         getArticles(baseUrl)
-//        getDammyArticles()
+        
+        //Qiita Apiの利用制限(ユーザー認証させないと60回/h)に引っかからない用
+        //あとで、引っかかった後安全に終了させる処理も書かなきゃ
+        //getDammyArticles()
     }
     
     
@@ -45,7 +48,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     
     private func setupRefreshControl(){
         self.refreshControl = UIRefreshControl()
-//        self.refreshControl?.attributedTitle = NSAttributedString(string: "引っ張って更新")
+        //self.refreshControl?.attributedTitle = NSAttributedString(string: "引っ張って更新")
         self.refreshControl?.addTarget(self, action: #selector(ArticleTableViewController.refresh), forControlEvents: UIControlEvents.ValueChanged)
 
     }
@@ -54,6 +57,8 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         super.didReceiveMemoryWarning()
     }
     
+    
+    // TODO 多分、分岐減らせるから改善したい
     func refresh() {
         print("call refresh.")
         guard let inputText = searchBar.text else {
@@ -62,12 +67,9 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
             return
         }
         
-        
         //検索バーに0文字以上入っていたら、検索してリフレッシュ
         if inputText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-            let parameter = ["query":inputText]
-            let requestUrl = createRequestUrl(parameter)
-            getArticles(requestUrl)
+            searchAction()
         } else {
             getArticles(baseUrl)
         }
@@ -99,7 +101,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
     
-    //ダミー用のメソッド
+    //ダミー用のメソッド()
     func getDammyArticles() {
         self.articleArray.removeAll()
         for i in 1...10 {
@@ -131,10 +133,8 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         let inputText = searchBar.text
         //パラメータを指定する
         let parameter = ["query":inputText]
-        
         //パラメータをエンコードしたURLを作成する
         let requestUrl = createRequestUrl(parameter)
-        
         //検索を行う
         getArticles(requestUrl)
         

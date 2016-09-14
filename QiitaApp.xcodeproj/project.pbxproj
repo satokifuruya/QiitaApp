@@ -17,7 +17,6 @@
 		E9AF4AC41D87E60F00E937EB /* ArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF4AC31D87E60F00E937EB /* ArticleTableViewCell.swift */; };
 		E9B1C52B1D879CD800E908DB /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1C52A1D879CD800E908DB /* Article.swift */; };
 		E9B1C5301D879D2E00E908DB /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1C52F1D879D2E00E908DB /* ArticleWebViewController.swift */; };
-		E9FD92621D88F2B1000F82DC /* QiitaImage.png in Resources */ = {isa = PBXBuildFile; fileRef = E9FD92611D88F2B1000F82DC /* QiitaImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +34,6 @@
 		E9AF4AC31D87E60F00E937EB /* ArticleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleTableViewCell.swift; sourceTree = "<group>"; };
 		E9B1C52A1D879CD800E908DB /* Article.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		E9B1C52F1D879D2E00E908DB /* ArticleWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWebViewController.swift; sourceTree = "<group>"; };
-		E9FD92611D88F2B1000F82DC /* QiitaImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QiitaImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,7 +86,6 @@
 		E927D05E1D879B840071E5C0 /* QiitaApp */ = {
 			isa = PBXGroup;
 			children = (
-				E9FD92611D88F2B1000F82DC /* QiitaImage.png */,
 				E9B1C5311D879D4700E908DB /* View */,
 				E9B1C52C1D879CEE00E908DB /* View Controller */,
 				E9B1C5291D879CB600E908DB /* Model */,
@@ -188,7 +185,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9FD92621D88F2B1000F82DC /* QiitaImage.png in Resources */,
 				E927D06A1D879B840071E5C0 /* LaunchScreen.storyboard in Resources */,
 				E927D0671D879B840071E5C0 /* Assets.xcassets in Resources */,
 				E927D0651D879B840071E5C0 /* Main.storyboard in Resources */,
