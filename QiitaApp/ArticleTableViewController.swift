@@ -27,7 +27,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         getArticles()
         
         //Qiita Apiの利用制限(ユーザー認証させないと60回/h)に引っかからない用
-//        getDammyArticles()
+        //getDammyArticles()
     }
     
     
@@ -221,7 +221,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     
-    //商品をタップして次の画面に遷移する前の処理
+    //セルをタップして次の画面に遷移する前の処理
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let cell = sender as? ArticleTableViewCell {
             if let articleWebViewController = segue.destinationViewController as? ArticleWebViewController {

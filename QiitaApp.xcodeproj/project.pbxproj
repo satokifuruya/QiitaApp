@@ -17,6 +17,8 @@
 		E9B1C52B1D879CD800E908DB /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1C52A1D879CD800E908DB /* Article.swift */; };
 		E9B1C5301D879D2E00E908DB /* ArticleWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B1C52F1D879D2E00E908DB /* ArticleWebViewController.swift */; };
 		E9DA441F1D8A65F900AF2198 /* BookmarkArticle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA441E1D8A65F900AF2198 /* BookmarkArticle.swift */; };
+		E9DA44211D8A720000AF2198 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA44201D8A720000AF2198 /* MyPageViewController.swift */; };
+		E9DA44231D8A742200AF2198 /* BookmarkArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA44221D8A742200AF2198 /* BookmarkArticleTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		E9B1C52A1D879CD800E908DB /* Article.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		E9B1C52F1D879D2E00E908DB /* ArticleWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleWebViewController.swift; sourceTree = "<group>"; };
 		E9DA441E1D8A65F900AF2198 /* BookmarkArticle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkArticle.swift; sourceTree = "<group>"; };
+		E9DA44201D8A720000AF2198 /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		E9DA44221D8A742200AF2198 /* BookmarkArticleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkArticleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 			children = (
 				E9B1C52F1D879D2E00E908DB /* ArticleWebViewController.swift */,
 				E9AF4AC01D87E28200E937EB /* ArticleTableViewController.swift */,
+				E9DA44201D8A720000AF2198 /* MyPageViewController.swift */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -120,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				E9AF4AC31D87E60F00E937EB /* ArticleTableViewCell.swift */,
+				E9DA44221D8A742200AF2198 /* BookmarkArticleTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -256,6 +262,8 @@
 			files = (
 				E9AF4AC41D87E60F00E937EB /* ArticleTableViewCell.swift in Sources */,
 				E927D0601D879B840071E5C0 /* AppDelegate.swift in Sources */,
+				E9DA44231D8A742200AF2198 /* BookmarkArticleTableViewCell.swift in Sources */,
+				E9DA44211D8A720000AF2198 /* MyPageViewController.swift in Sources */,
 				E9AF4AC11D87E28200E937EB /* ArticleTableViewController.swift in Sources */,
 				E9B1C5301D879D2E00E908DB /* ArticleWebViewController.swift in Sources */,
 				E9DA441F1D8A65F900AF2198 /* BookmarkArticle.swift in Sources */,

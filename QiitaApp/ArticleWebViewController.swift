@@ -14,8 +14,8 @@ class ArticleWebViewController: UIViewController {
     
     //URLではなくArticleを保持するように変更した
     var article: Article!
+    var bookmarkArticle = BookmarkArticle.sharedInstance
     
-    //商品ページを参照するためのWebView
     @IBOutlet weak var webView: UIWebView!
     
     override func viewDidLoad() {
@@ -34,7 +34,38 @@ class ArticleWebViewController: UIViewController {
     
     
     @IBAction func tapBookmarkButton(sender: UIBarButtonItem) {
+        if isStockedArticle() {
+            showAlert("既に登録してあります。")
+        } else {
+            self.bookmarkArticle.addBookmarkArticle(article)
+            showAlert("ブックマークに保存しました。")
+            
+        }
+    }
+    
+    
+    func isStockedArticle() -> Bool {
+        for myArticle in self.bookmarkArticle.bookmarks {
+            print("myArticle.articleUrl:" + myArticle.articleUrl)
+            print("self.article.articleUrl:" + self.article.articleUrl)
+            if myArticle.articleUrl == self.article.articleUrl {
+                return true
+            }
+        }
+        return false
+    }
+    
+    
+    // ボタンを押下した時にアラートを表示するメソッド
+    func showAlert(text: String) {
+        let alert: UIAlertController = UIAlertController(title: text, message: nil, preferredStyle:  UIAlertControllerStyle.Alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:{
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
         
+        alert.addAction(defaultAction)
+        presentViewController(alert, animated: true, completion: nil)
     }
     
 }

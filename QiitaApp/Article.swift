@@ -10,7 +10,7 @@ import UIKit
 
 class Article: NSObject {
     var title = ""
-    var iconImageUrl  = ""
+    var iconImageUrl  = "https://qiita-image-store.s3.amazonaws.com/0/88/profile-images/1473684075"
     var userId  = ""
-    var articleUrl  = "https://qiita-image-store.s3.amazonaws.com/0/88/profile-images/1473684075"
+    var articleUrl  = ""
 }

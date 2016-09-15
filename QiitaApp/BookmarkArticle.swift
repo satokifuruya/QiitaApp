@@ -11,10 +11,11 @@ import RealmSwift
 
 class BookmarkArticle: NSObject {
 
-    var bookmarks : Array<Article>?
+    static let sharedInstance =  BookmarkArticle()
+    var bookmarks : Array<Article> = []
     
     func addBookmarkArticle(article: Article){
-        self.bookmarks?.insert(article, atIndex: 0)
+        self.bookmarks.insert(article, atIndex: 0)
     }
     
 }

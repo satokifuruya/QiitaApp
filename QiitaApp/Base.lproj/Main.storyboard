@@ -79,22 +79,59 @@
             </objects>
             <point key="canvasLocation" x="924.5" y="486.5"/>
         </scene>
-        <!--Table View Controller-->
+        <!--My Page View Controller-->
         <scene sceneID="JM8-5f-cv0">
             <objects>
-                <tableViewController id="Xi1-dW-Ykc" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="6W8-wr-sCw">
+                <tableViewController id="Xi1-dW-Ykc" customClass="MyPageViewController" customModule="QiitaApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="6W8-wr-sCw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="B3J-gj-o1x">
-                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookmarkArticleCell" id="B3J-gj-o1x" customClass="BookmarkArticleTableViewCell" customModule="QiitaApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B3J-gj-o1x" id="2kM-la-zkF">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cik-Qg-B2x">
+                                            <rect key="frame" x="10" y="8" width="80" height="80"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="80" id="4ok-rw-DTa"/>
+                                                <constraint firstAttribute="width" constant="80" id="eOB-8w-vSn"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bookmarkした記事のタイトルがここにひょうじされる" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0d-HX-k4E">
+                                            <rect key="frame" x="100" y="10" width="265" height="35"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="K_itosa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqe-ai-kzd">
+                                            <rect key="frame" x="100" y="73" width="265" height="17"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="s0d-HX-k4E" secondAttribute="trailing" constant="10" id="28d-Do-xDk"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hqe-ai-kzd" secondAttribute="trailing" constant="10" id="3AP-nM-Mac"/>
+                                        <constraint firstItem="Cik-Qg-B2x" firstAttribute="top" secondItem="2kM-la-zkF" secondAttribute="top" constant="10" id="4ax-Pi-Bke"/>
+                                        <constraint firstItem="Hqe-ai-kzd" firstAttribute="bottom" secondItem="Cik-Qg-B2x" secondAttribute="bottom" id="6nz-xU-TIQ"/>
+                                        <constraint firstItem="Cik-Qg-B2x" firstAttribute="leading" secondItem="2kM-la-zkF" secondAttribute="leading" constant="10" id="74G-sQ-gtI"/>
+                                        <constraint firstItem="s0d-HX-k4E" firstAttribute="top" secondItem="Cik-Qg-B2x" secondAttribute="top" id="HDq-Q7-2mz"/>
+                                        <constraint firstItem="Hqe-ai-kzd" firstAttribute="leading" secondItem="Cik-Qg-B2x" secondAttribute="trailing" constant="10" id="aO2-q9-v4m"/>
+                                        <constraint firstItem="s0d-HX-k4E" firstAttribute="leading" secondItem="Cik-Qg-B2x" secondAttribute="trailing" constant="10" id="g5L-EL-nO6"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="iconImage" destination="Cik-Qg-B2x" id="aHE-2t-vG4"/>
+                                    <outlet property="titleLabel" destination="s0d-HX-k4E" id="AVE-GL-bG5"/>
+                                    <outlet property="userIdLabel" destination="Hqe-ai-kzd" id="MFd-me-XLc"/>
+                                    <segue destination="0CZ-bM-sJC" kind="show" id="9LV-Z0-6tI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -148,7 +185,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9q0-x3-4Eh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1488.5" y="486.5"/>
+            <point key="canvasLocation" x="1552.5" y="889.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BED-qI-iaj">
@@ -210,4 +247,7 @@
             <point key="canvasLocation" x="-304.5" y="864.5"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="9LV-Z0-6tI"/>
+    </inferredMetricsTieBreakers>
 </document>
