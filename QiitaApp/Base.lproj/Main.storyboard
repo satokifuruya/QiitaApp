@@ -109,7 +109,7 @@
             </objects>
             <point key="canvasLocation" x="924.5" y="1275.5"/>
         </scene>
-        <!--Article Web View Controller-->
+        <!--Title-->
         <scene sceneID="343-IT-bOI">
             <objects>
                 <viewController id="0CZ-bM-sJC" customClass="ArticleWebViewController" customModule="QiitaApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -134,6 +134,13 @@
                             <constraint firstItem="E1g-MO-cL4" firstAttribute="leading" secondItem="ikO-65-wEd" secondAttribute="leading" id="rf5-YL-SJP"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Title" id="U8Z-gm-t6I">
+                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="9sd-Et-XgP">
+                            <connections>
+                                <action selector="tapBookmarkButton:" destination="0CZ-bM-sJC" id="V34-fE-W6C"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="webView" destination="E1g-MO-cL4" id="flO-lk-Tyw"/>

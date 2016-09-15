@@ -14,7 +14,8 @@ class ArticleTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel:UILabel!
     @IBOutlet weak var userIdLabel: UILabel!
     
-    var articleUrl :String? //商品ページのURL。遷移先の画面で利用する
+    //web viewへ遷移するときにarticleオブジェクトの情報を保持したい
+    var article :Article?
     
     //articleTableViewは使わない
     override func awakeFromNib() {

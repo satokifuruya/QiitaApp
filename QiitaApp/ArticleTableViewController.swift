@@ -27,7 +27,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         getArticles()
         
         //Qiita Apiの利用制限(ユーザー認証させないと60回/h)に引っかからない用
-        //getDammyArticles()
+//        getDammyArticles()
     }
     
     
@@ -173,7 +173,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         cell.titleLabel.text = article.title
         cell.userIdLabel.text = article.userId
         
-        cell.articleUrl = article.articleUrl
+        cell.article = article
         
         //画像処理↓
         //画像がまだ設定されていない場合に処理を行なう
@@ -226,7 +226,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         if let cell = sender as? ArticleTableViewCell {
             if let articleWebViewController = segue.destinationViewController as? ArticleWebViewController {
                 //商品ページのURLを設定する
-                articleWebViewController.articleUrl = cell.articleUrl
+                articleWebViewController.article = cell.article
             }
         }
     }
