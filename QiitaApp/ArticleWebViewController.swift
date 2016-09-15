@@ -46,8 +46,6 @@ class ArticleWebViewController: UIViewController {
     
     func isStockedArticle() -> Bool {
         for myArticle in self.bookmarkArticle.bookmarks {
-            print("myArticle.articleUrl:" + myArticle.articleUrl)
-            print("self.article.articleUrl:" + self.article.articleUrl)
             if myArticle.articleUrl == self.article.articleUrl {
                 return true
             }

@@ -26,6 +26,8 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         setupRefreshControl()
         getArticles()
         
+        BookmarkArticle.sharedInstance.getMyBookmarkArticles()
+        
         //Qiita Apiの利用制限(ユーザー認証させないと60回/h)に引っかからない用
         //getDammyArticles()
     }

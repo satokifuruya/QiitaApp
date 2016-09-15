@@ -91,7 +91,6 @@ class MyPageViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
-        
     }
 
     //セルをタップして次の画面に遷移する前の処理
