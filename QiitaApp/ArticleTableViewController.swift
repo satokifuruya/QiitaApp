@@ -16,8 +16,8 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     var imageCache = NSCache()
     var searchBar: UISearchBar!
     
-    //APIのURL
     let baseUrl: String = "https://qiita.com/api/v2/items"
+    var currentQuery :String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,13 +66,13 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     
     //検索バーに1文字以上あれば検索
     func getArticles() {
-        guard let inputText = searchBar.text else {
+        guard let query = currentQuery else {
             getArticlesWithQuery(nil)
             return
         }
         
-        if inputText.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
-            getArticlesWithQuery(inputText)
+        if query.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0 {
+            getArticlesWithQuery(query)
         } else {
             getArticlesWithQuery(nil)
         }
@@ -126,11 +126,16 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - search bar delegate
     //キーボードのsearchボタンがタップされた時に呼び出される
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        getArticles()
-        searchBar.resignFirstResponder()
+        searchAction()
     }
     
     @IBAction func tapSearchBarButton(sender: UIBarButtonItem) {
+        searchAction()
+    }
+    
+    private func searchAction() {
+        let inputText = searchBar.text
+        self.currentQuery = inputText
         getArticles()
         searchBar.resignFirstResponder()
     }
