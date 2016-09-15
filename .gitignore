@@ -23,6 +23,7 @@ xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 
+UserInterfaceState.xcuserstate
 
 ### macOS ###
 *.DS_Store
