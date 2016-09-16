@@ -66,21 +66,6 @@ class ArticleWebViewController: UIViewController {
         presentViewController(alert, animated: true, completion: nil)
     }
     
-//    func showConfirmAlert(text: String) {
-//        let alert: UIAlertController = UIAlertController(title: text, message: nil, preferredStyle:  UIAlertControllerStyle.Alert)
-//        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:{
-//            (action: UIAlertAction!) -> Void in
-//            print("OK")
-//        })
-//        // Cancelボタン
-//        let cancelAction: UIAlertAction = UIAlertAction(title: "cancel", style: UIAlertActionStyle.Cancel, handler:{
-//            (action: UIAlertAction!) -> Void in
-//            print("cancelAction")
-//        })
-//        
-//        alert.addAction(defaultAction)
-//        presentViewController(alert, animated: true, completion: nil)
-//    }
     
     
 }

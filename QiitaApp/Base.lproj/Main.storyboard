@@ -67,9 +67,7 @@
                             <outlet property="delegate" destination="Xi1-dW-Ykc" id="i3b-af-gA1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="7m9-MS-P6C">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="kIw-iH-fem"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="7m9-MS-P6C"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <segue destination="0CZ-bM-sJC" kind="show" identifier="ShowToArticleWebViewController" id="ZJY-1H-ha1"/>
