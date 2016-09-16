@@ -5,159 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Article Table View Controller-->
-        <scene sceneID="Uyg-A6-RO3">
-            <objects>
-                <tableViewController id="oLg-zG-K4q" customClass="ArticleTableViewController" customModule="QiitaApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZEV-Dq-DN9">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArticleTableViewCell" id="9Wj-tt-c62" customClass="ArticleTableViewCell" customModule="QiitaApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="375" height="100"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Wj-tt-c62" id="BVd-NX-nbd">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="oLg-zG-K4q" id="R8W-TC-WPp"/>
-                            <outlet property="delegate" destination="oLg-zG-K4q" id="DdL-1m-tq8"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="V9B-2j-Gco">
-                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="oF7-hf-xrr">
-                            <connections>
-                                <action selector="tapSearchBarButton:" destination="oLg-zG-K4q" id="uKi-VM-Neb"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <segue destination="0CZ-bM-sJC" kind="show" identifier="ShowToArticleWebViewController" id="lf1-Na-4Ff"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uUy-6a-BvO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="924.5" y="486.5"/>
-        </scene>
-        <!--My Page View Controller-->
-        <scene sceneID="JM8-5f-cv0">
-            <objects>
-                <tableViewController id="Xi1-dW-Ykc" customClass="MyPageViewController" customModule="QiitaApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="6W8-wr-sCw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArticleTableViewCell" id="B3J-gj-o1x" customClass="ArticleTableViewCell" customModule="QiitaApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="375" height="100"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B3J-gj-o1x" id="2kM-la-zkF">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Xi1-dW-Ykc" id="1bH-Dj-xhP"/>
-                            <outlet property="delegate" destination="Xi1-dW-Ykc" id="i3b-af-gA1"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="7m9-MS-P6C"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <segue destination="0CZ-bM-sJC" kind="show" identifier="ShowToArticleWebViewController" id="ZJY-1H-ha1"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KZh-oh-HLv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="924.5" y="1275.5"/>
-        </scene>
-        <!--Title-->
-        <scene sceneID="343-IT-bOI">
-            <objects>
-                <viewController id="0CZ-bM-sJC" customClass="ArticleWebViewController" customModule="QiitaApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="bZ2-eM-Ezz"/>
-                        <viewControllerLayoutGuide type="bottom" id="bKU-5Z-spy"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ikO-65-wEd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E1g-MO-cL4">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                            </webView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="E1g-MO-cL4" secondAttribute="trailing" id="EUp-Rg-qaH"/>
-                            <constraint firstItem="bKU-5Z-spy" firstAttribute="top" secondItem="E1g-MO-cL4" secondAttribute="bottom" id="FOK-cv-Esj"/>
-                            <constraint firstItem="E1g-MO-cL4" firstAttribute="top" secondItem="ikO-65-wEd" secondAttribute="top" id="ijO-D7-RNj"/>
-                            <constraint firstItem="E1g-MO-cL4" firstAttribute="leading" secondItem="ikO-65-wEd" secondAttribute="leading" id="rf5-YL-SJP"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Title" id="U8Z-gm-t6I">
-                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="9sd-Et-XgP">
-                            <connections>
-                                <action selector="tapBookmarkButton:" destination="0CZ-bM-sJC" id="V34-fE-W6C"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="webView" destination="E1g-MO-cL4" id="flO-lk-Tyw"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9q0-x3-4Eh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1552.5" y="889.5"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="BED-qI-iaj">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zM3-d9-dBM" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="recents" id="PCT-f5-Ogf"/>
-                    <toolbarItems/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4Nn-ID-g6n">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="oLg-zG-K4q" kind="relationship" relationship="rootViewController" id="ODc-e9-ukk"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wfT-nj-nGs" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="381.5" y="486.5"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="MVm-Lk-H24">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q2z-qx-2i2" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="favorites" id="ub0-av-ZCC"/>
-                    <toolbarItems/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YoX-OO-RCf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Xi1-dW-Ykc" kind="relationship" relationship="rootViewController" id="Zbi-Z5-RMn"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="tgp-lb-yas" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="381.5" y="1275.5"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="UKb-4a-KBK">
             <objects>
@@ -169,16 +16,33 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="zM3-d9-dBM" kind="relationship" relationship="viewControllers" id="PhQ-dw-dER"/>
-                        <segue destination="q2z-qx-2i2" kind="relationship" relationship="viewControllers" id="Hb4-FB-2dl"/>
+                        <segue destination="rMB-Kb-dc4" kind="relationship" relationship="viewControllers" id="fC1-Ro-WSf"/>
+                        <segue destination="EPw-aP-cL7" kind="relationship" relationship="viewControllers" id="F4o-Lm-7gL"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2a0-nH-WQ9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-304.5" y="864.5"/>
+            <point key="canvasLocation" x="-416.5" y="866.5"/>
+        </scene>
+        <!--ArticleTableView-->
+        <scene sceneID="gvk-l2-NjK">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ArticleTableView" id="rMB-Kb-dc4" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="cpG-gR-BM2"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aZ8-TZ-BVa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="328.5" y="588"/>
+        </scene>
+        <!--MyPage-->
+        <scene sceneID="ZEd-OM-Jn4">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MyPage" id="EPw-aP-cL7" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="Ayj-LX-p59"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lmZ-zN-uY9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="302.5" y="1119"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="ZJY-1H-ha1"/>
-    </inferredMetricsTieBreakers>
 </document>

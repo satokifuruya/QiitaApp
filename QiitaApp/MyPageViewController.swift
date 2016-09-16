@@ -101,6 +101,7 @@ class MyPageViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let articleWebViewController = segue.destinationViewController as! ArticleWebViewController
         articleWebViewController.article = sender as! Article!
+        articleWebViewController.navigationItem.title = sender?.title
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
