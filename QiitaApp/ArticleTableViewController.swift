@@ -238,6 +238,7 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let articleWebViewController = segue.destinationViewController as! ArticleWebViewController
         articleWebViewController.article = sender as! Article!
+        articleWebViewController.navigationItem.title = sender?.title
     }
     
     

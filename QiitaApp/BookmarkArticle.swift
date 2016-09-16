@@ -19,7 +19,7 @@ class BookmarkArticle: NSObject {
         let realm = try! Realm()
         
         for realmArticle in realm.objects(Article) {
-            self.bookmarks.append(realmArticle)
+            self.bookmarks.insert(realmArticle, atIndex: 0)
         }
     }
     
@@ -28,11 +28,13 @@ class BookmarkArticle: NSObject {
         addBookmarkArticleToRealm(article)
     }
     
-    func removeBookmark(article: Article){
-        removeBookmarArticleFromRealm(article)
+    func removeBookmark(index: Int){
+        let targetArticle = self.bookmarks[index]
+        self.bookmarks.removeAtIndex(index)
+        removeBookmarArticleFromRealm(targetArticle)
     }
     
-    func addBookmarkArticleToRealm(article: Article){
+    private func addBookmarkArticleToRealm(article: Article){
         let realm = try! Realm()
         let bookmarkArticle = Article()
         bookmarkArticle.title = article.title
@@ -45,7 +47,7 @@ class BookmarkArticle: NSObject {
     }
     
     
-    func removeBookmarArticleFromRealm(article: Article){
+    private func removeBookmarArticleFromRealm(article: Article){
         let realm = try! Realm()
         if let targetArticle = realm.objects(Article).filter("articleUrl = %@", article.articleUrl).first {
             try! realm.write {

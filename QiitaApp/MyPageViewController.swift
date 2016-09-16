@@ -17,6 +17,7 @@ class MyPageViewController: UITableViewController {
         super.viewDidLoad()
 
         self.tableView.registerNib(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
+        navigationItem.leftBarButtonItem = editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,10 +40,6 @@ class MyPageViewController: UITableViewController {
         return 100
     }
     
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        print("editbutton")
-        return true
-    }
     
     //テーブルセルの取得処理
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -100,11 +97,22 @@ class MyPageViewController: UITableViewController {
         self.performSegueWithIdentifier("ShowToArticleWebViewController", sender: article)
     }
     
-    
     //画面遷移時に呼ばれるメソッド
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let articleWebViewController = segue.destinationViewController as! ArticleWebViewController
         articleWebViewController.article = sender as! Article!
+        articleWebViewController.navigationItem.title = sender?.title
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        switch editingStyle {
+        case .Delete:
+            print("delete呼ばれた")
+            bookmarkArticles.removeBookmark(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+        default:
+            return
+        }
     }
     
 }

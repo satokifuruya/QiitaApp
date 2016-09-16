@@ -19,6 +19,9 @@
 		E9DA44211D8A720000AF2198 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA44201D8A720000AF2198 /* MyPageViewController.swift */; };
 		E9DA442E1D8AAAA100AF2198 /* ArticleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA442C1D8AAAA100AF2198 /* ArticleTableViewCell.swift */; };
 		E9DA442F1D8AAAA100AF2198 /* ArticleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9DA442D1D8AAAA100AF2198 /* ArticleTableViewCell.xib */; };
+		E9EE3AB31D8BA94C009F93D7 /* ArticleTableView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9EE3AB21D8BA94C009F93D7 /* ArticleTableView.storyboard */; };
+		E9EE3AB51D8BAB48009F93D7 /* MyPage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9EE3AB41D8BAB48009F93D7 /* MyPage.storyboard */; };
+		E9EE3AB71D8BAB6C009F93D7 /* ArticleWebView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9EE3AB61D8BAB6C009F93D7 /* ArticleWebView.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +41,9 @@
 		E9DA44201D8A720000AF2198 /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		E9DA442C1D8AAAA100AF2198 /* ArticleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleTableViewCell.swift; sourceTree = "<group>"; };
 		E9DA442D1D8AAAA100AF2198 /* ArticleTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ArticleTableViewCell.xib; sourceTree = "<group>"; };
+		E9EE3AB21D8BA94C009F93D7 /* ArticleTableView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ArticleTableView.storyboard; sourceTree = "<group>"; };
+		E9EE3AB41D8BAB48009F93D7 /* MyPage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MyPage.storyboard; sourceTree = "<group>"; };
+		E9EE3AB61D8BAB6C009F93D7 /* ArticleWebView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ArticleWebView.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,12 +96,12 @@
 		E927D05E1D879B840071E5C0 /* QiitaApp */ = {
 			isa = PBXGroup;
 			children = (
+				E9EE3AB81D8BBB41009F93D7 /* StoryBoard */,
 				E9D704741D8921F6006C2D18 /* Entity */,
 				E9B1C5311D879D4700E908DB /* View */,
 				E9B1C52C1D879CEE00E908DB /* View Controller */,
 				E9B1C5291D879CB600E908DB /* Model */,
 				E927D05F1D879B840071E5C0 /* AppDelegate.swift */,
-				E927D0631D879B840071E5C0 /* Main.storyboard */,
 				E927D0661D879B840071E5C0 /* Assets.xcassets */,
 				E927D0681D879B840071E5C0 /* LaunchScreen.storyboard */,
 				E927D06B1D879B840071E5C0 /* Info.plist */,
@@ -136,6 +142,17 @@
 				E9B1C52A1D879CD800E908DB /* Article.swift */,
 			);
 			name = Entity;
+			sourceTree = "<group>";
+		};
+		E9EE3AB81D8BBB41009F93D7 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				E927D0631D879B840071E5C0 /* Main.storyboard */,
+				E9EE3AB61D8BAB6C009F93D7 /* ArticleWebView.storyboard */,
+				E9EE3AB21D8BA94C009F93D7 /* ArticleTableView.storyboard */,
+				E9EE3AB41D8BAB48009F93D7 /* MyPage.storyboard */,
+			);
+			name = StoryBoard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,9 +217,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9DA442F1D8AAAA100AF2198 /* ArticleTableViewCell.xib in Resources */,
+				E9EE3AB51D8BAB48009F93D7 /* MyPage.storyboard in Resources */,
 				E927D06A1D879B840071E5C0 /* LaunchScreen.storyboard in Resources */,
 				E927D0671D879B840071E5C0 /* Assets.xcassets in Resources */,
+				E9EE3AB71D8BAB6C009F93D7 /* ArticleWebView.storyboard in Resources */,
 				E927D0651D879B840071E5C0 /* Main.storyboard in Resources */,
+				E9EE3AB31D8BA94C009F93D7 /* ArticleTableView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
