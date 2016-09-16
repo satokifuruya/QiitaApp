@@ -96,15 +96,12 @@
 		E927D05E1D879B840071E5C0 /* QiitaApp */ = {
 			isa = PBXGroup;
 			children = (
+				E9EE3AB81D8BBB41009F93D7 /* StoryBoard */,
 				E9D704741D8921F6006C2D18 /* Entity */,
 				E9B1C5311D879D4700E908DB /* View */,
 				E9B1C52C1D879CEE00E908DB /* View Controller */,
 				E9B1C5291D879CB600E908DB /* Model */,
 				E927D05F1D879B840071E5C0 /* AppDelegate.swift */,
-				E927D0631D879B840071E5C0 /* Main.storyboard */,
-				E9EE3AB61D8BAB6C009F93D7 /* ArticleWebView.storyboard */,
-				E9EE3AB21D8BA94C009F93D7 /* ArticleTableView.storyboard */,
-				E9EE3AB41D8BAB48009F93D7 /* MyPage.storyboard */,
 				E927D0661D879B840071E5C0 /* Assets.xcassets */,
 				E927D0681D879B840071E5C0 /* LaunchScreen.storyboard */,
 				E927D06B1D879B840071E5C0 /* Info.plist */,
@@ -145,6 +142,17 @@
 				E9B1C52A1D879CD800E908DB /* Article.swift */,
 			);
 			name = Entity;
+			sourceTree = "<group>";
+		};
+		E9EE3AB81D8BBB41009F93D7 /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				E927D0631D879B840071E5C0 /* Main.storyboard */,
+				E9EE3AB61D8BAB6C009F93D7 /* ArticleWebView.storyboard */,
+				E9EE3AB21D8BA94C009F93D7 /* ArticleTableView.storyboard */,
+				E9EE3AB41D8BAB48009F93D7 /* MyPage.storyboard */,
+			);
+			name = StoryBoard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
