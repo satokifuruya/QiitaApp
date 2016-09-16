@@ -12,25 +12,75 @@ import WebKit
 
 class ArticleWebViewController: UIViewController {
     
-    //商品ページのURL
-    var articleUrl :String?
+    //URLではなくArticleを保持するように変更した
+    var article: Article!
+    var bookmarkArticle = BookmarkArticle.sharedInstance
     
-    //商品ページを参照するためのWebView
     @IBOutlet weak var webView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //WebViewのurlを読み込ませてWebページを表示させる
-        if let articleUrl = articleUrl {
-            if let url = NSURL(string: articleUrl) {
-                let request = NSURLRequest(URL: url)
-                webView.loadRequest(request)
-            }
-        }
+        let articleUrl = NSURL(string: self.article.articleUrl)
+        let request = NSURLRequest(URL: articleUrl!)
+        webView.loadRequest(request)
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    
+    @IBAction func tapBookmarkButton(sender: UIBarButtonItem) {
+        if isStockedArticle() {
+            showAlert("既に登録してあります。")
+        } else {
+            self.bookmarkArticle.addBookmarkArticle(article)
+            showAlert("ブックマークに保存しました。")
+            
+        }
+    }
+    
+    
+    func isStockedArticle() -> Bool {
+        for myArticle in self.bookmarkArticle.bookmarks {
+            if myArticle.articleUrl == self.article.articleUrl {
+                return true
+            }
+        }
+        return false
+    }
+    
+    
+    // ボタンを押下した時にアラートを表示するメソッド
+    func showAlert(text: String) {
+        let alert: UIAlertController = UIAlertController(title: text, message: nil, preferredStyle:  UIAlertControllerStyle.Alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:{
+            (action: UIAlertAction!) -> Void in
+            print("OK")
+        })
+        
+        alert.addAction(defaultAction)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+//    func showConfirmAlert(text: String) {
+//        let alert: UIAlertController = UIAlertController(title: text, message: nil, preferredStyle:  UIAlertControllerStyle.Alert)
+//        let defaultAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler:{
+//            (action: UIAlertAction!) -> Void in
+//            print("OK")
+//        })
+//        // Cancelボタン
+//        let cancelAction: UIAlertAction = UIAlertAction(title: "cancel", style: UIAlertActionStyle.Cancel, handler:{
+//            (action: UIAlertAction!) -> Void in
+//            print("cancelAction")
+//        })
+//        
+//        alert.addAction(defaultAction)
+//        presentViewController(alert, animated: true, completion: nil)
+//    }
+    
+    
 }

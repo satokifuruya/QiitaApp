@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
-class Article: NSObject {
-    var title = ""
-    var iconImageUrl  = ""
-    var userId  = ""
-    var articleUrl  = "https://qiita-image-store.s3.amazonaws.com/0/88/profile-images/1473684075"
+class Article: Object {
+    dynamic var title = ""
+    dynamic var iconImageUrl  = "https://qiita-image-store.s3.amazonaws.com/0/88/profile-images/1473684075"
+    dynamic var userId  = ""
+    dynamic var articleUrl  = ""
 }
