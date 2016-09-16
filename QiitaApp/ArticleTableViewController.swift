@@ -22,6 +22,9 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.registerNib(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
+        
+        
         setupSearchBar()
         setupRefreshControl()
         getArticles()
@@ -170,7 +173,8 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     // MARK: - Table view data source
     //テーブルセルの取得処理
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("articleCell", forIndexPath: indexPath) as! ArticleTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ArticleTableViewCell", forIndexPath: indexPath) as! ArticleTableViewCell
+
         let article = articleArray[indexPath.row]
         cell.titleLabel.text = article.title
         cell.userIdLabel.text = article.userId
@@ -223,13 +227,18 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     }
     
     
-    //セルをタップして次の画面に遷移する前の処理
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let cell = sender as? ArticleTableViewCell {
-            if let articleWebViewController = segue.destinationViewController as? ArticleWebViewController {
-                //商品ページのURLを設定する
-                articleWebViewController.article = cell.article
-            }
-        }
+    //セルがタップされた時に呼ばれるメソッド 
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let article = self.articleArray[indexPath.row]
+        self.performSegueWithIdentifier("ShowToArticleWebViewController", sender: article)
     }
+    
+    
+    //画面遷移時に呼ばれるメソッド
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let articleWebViewController = segue.destinationViewController as! ArticleWebViewController
+        articleWebViewController.article = sender as! Article!
+    }
+    
+    
 }

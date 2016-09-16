@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Article Table View Controller-->
@@ -15,55 +14,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="articleCell" id="9Wj-tt-c62" customClass="ArticleTableViewCell" customModule="QiitaApp" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArticleTableViewCell" id="9Wj-tt-c62" customClass="ArticleTableViewCell" customModule="QiitaApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Wj-tt-c62" id="BVd-NX-nbd">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dzn-PA-CiC">
-                                            <rect key="frame" x="10" y="10" width="80" height="80"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="K1a-fc-TBz"/>
-                                                <constraint firstAttribute="width" constant="80" id="Qpd-lC-OrZ"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Higher Order Componentのテストをrecompose/createSinkでキレイ目に記述する" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgw-Ih-14G">
-                                            <rect key="frame" x="98" y="10" width="269" height="35"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="inuscript" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRt-oT-mO1">
-                                            <rect key="frame" x="98" y="73" width="269" height="17"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Dzn-PA-CiC" firstAttribute="top" secondItem="BVd-NX-nbd" secondAttribute="top" constant="10" id="0M4-RQ-27P"/>
-                                        <constraint firstItem="fgw-Ih-14G" firstAttribute="leading" secondItem="Dzn-PA-CiC" secondAttribute="trailing" constant="8" id="17F-ga-1h6"/>
-                                        <constraint firstItem="qRt-oT-mO1" firstAttribute="leading" secondItem="Dzn-PA-CiC" secondAttribute="trailing" constant="8" id="DjY-OD-FTI"/>
-                                        <constraint firstItem="Dzn-PA-CiC" firstAttribute="leading" secondItem="BVd-NX-nbd" secondAttribute="leading" constant="10" id="F4C-Fe-Idc"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="qRt-oT-mO1" secondAttribute="trailing" id="MrU-Wi-HJ1"/>
-                                        <constraint firstItem="fgw-Ih-14G" firstAttribute="top" secondItem="Dzn-PA-CiC" secondAttribute="top" id="Rqg-ek-VAV"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="fgw-Ih-14G" secondAttribute="trailing" id="jaF-id-NK0"/>
-                                        <constraint firstItem="qRt-oT-mO1" firstAttribute="bottom" secondItem="Dzn-PA-CiC" secondAttribute="bottom" id="wqd-1w-9Kf"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="iconImage" destination="Dzn-PA-CiC" id="dKe-bZ-1Yt"/>
-                                    <outlet property="titleLabel" destination="fgw-Ih-14G" id="rc2-BT-3I5"/>
-                                    <outlet property="userIdLabel" destination="qRt-oT-mO1" id="Rdf-EB-Wux"/>
-                                    <segue destination="0CZ-bM-sJC" kind="show" id="ucY-e7-Q5L"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="oLg-zG-K4q" id="BIW-et-skV"/>
-                            <outlet property="delegate" destination="oLg-zG-K4q" id="DZg-Nx-Hrw"/>
+                            <outlet property="dataSource" destination="oLg-zG-K4q" id="R8W-TC-WPp"/>
+                            <outlet property="delegate" destination="oLg-zG-K4q" id="DdL-1m-tq8"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="V9B-2j-Gco">
@@ -74,6 +36,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="0CZ-bM-sJC" kind="show" identifier="ShowToArticleWebViewController" id="lf1-Na-4Ff"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uUy-6a-BvO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -88,50 +53,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="bookmarkArticleCell" id="B3J-gj-o1x" customClass="BookmarkArticleTableViewCell" customModule="QiitaApp" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ArticleTableViewCell" id="B3J-gj-o1x" customClass="ArticleTableViewCell" customModule="QiitaApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B3J-gj-o1x" id="2kM-la-zkF">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cik-Qg-B2x">
-                                            <rect key="frame" x="10" y="8" width="80" height="80"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="80" id="4ok-rw-DTa"/>
-                                                <constraint firstAttribute="width" constant="80" id="eOB-8w-vSn"/>
-                                            </constraints>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="bookmarkした記事のタイトルがここにひょうじされる" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0d-HX-k4E">
-                                            <rect key="frame" x="100" y="10" width="265" height="35"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="K_itosa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hqe-ai-kzd">
-                                            <rect key="frame" x="100" y="73" width="265" height="17"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="s0d-HX-k4E" secondAttribute="trailing" constant="10" id="28d-Do-xDk"/>
-                                        <constraint firstAttribute="trailing" secondItem="Hqe-ai-kzd" secondAttribute="trailing" constant="10" id="3AP-nM-Mac"/>
-                                        <constraint firstItem="Cik-Qg-B2x" firstAttribute="top" secondItem="2kM-la-zkF" secondAttribute="top" constant="10" id="4ax-Pi-Bke"/>
-                                        <constraint firstItem="Hqe-ai-kzd" firstAttribute="bottom" secondItem="Cik-Qg-B2x" secondAttribute="bottom" id="6nz-xU-TIQ"/>
-                                        <constraint firstItem="Cik-Qg-B2x" firstAttribute="leading" secondItem="2kM-la-zkF" secondAttribute="leading" constant="10" id="74G-sQ-gtI"/>
-                                        <constraint firstItem="s0d-HX-k4E" firstAttribute="top" secondItem="Cik-Qg-B2x" secondAttribute="top" id="HDq-Q7-2mz"/>
-                                        <constraint firstItem="Hqe-ai-kzd" firstAttribute="leading" secondItem="Cik-Qg-B2x" secondAttribute="trailing" constant="10" id="aO2-q9-v4m"/>
-                                        <constraint firstItem="s0d-HX-k4E" firstAttribute="leading" secondItem="Cik-Qg-B2x" secondAttribute="trailing" constant="10" id="g5L-EL-nO6"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="iconImage" destination="Cik-Qg-B2x" id="aHE-2t-vG4"/>
-                                    <outlet property="titleLabel" destination="s0d-HX-k4E" id="AVE-GL-bG5"/>
-                                    <outlet property="userIdLabel" destination="Hqe-ai-kzd" id="MFd-me-XLc"/>
-                                    <segue destination="0CZ-bM-sJC" kind="show" id="9LV-Z0-6tI"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -139,8 +67,13 @@
                             <outlet property="delegate" destination="Xi1-dW-Ykc" id="i3b-af-gA1"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="7m9-MS-P6C"/>
+                    <navigationItem key="navigationItem" id="7m9-MS-P6C">
+                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="kIw-iH-fem"/>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="0CZ-bM-sJC" kind="show" identifier="ShowToArticleWebViewController" id="ZJY-1H-ha1"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KZh-oh-HLv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -248,6 +181,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="9LV-Z0-6tI"/>
+        <segue reference="ZJY-1H-ha1"/>
     </inferredMetricsTieBreakers>
 </document>

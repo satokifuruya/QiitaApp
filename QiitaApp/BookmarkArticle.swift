@@ -28,6 +28,10 @@ class BookmarkArticle: NSObject {
         addBookmarkArticleToRealm(article)
     }
     
+    func removeBookmark(article: Article){
+        removeBookmarArticleFromRealm(article)
+    }
+    
     func addBookmarkArticleToRealm(article: Article){
         let realm = try! Realm()
         let bookmarkArticle = Article()
@@ -37,6 +41,18 @@ class BookmarkArticle: NSObject {
         bookmarkArticle.iconImageUrl = article.iconImageUrl
         try! realm.write {
             realm.add(bookmarkArticle)
+        }
+    }
+    
+    
+    func removeBookmarArticleFromRealm(article: Article){
+        let realm = try! Realm()
+        if let targetArticle = realm.objects(Article).filter("articleUrl = %@", article.articleUrl).first {
+            try! realm.write {
+                realm.delete(targetArticle)
+            }
+        } else {
+            print("not found bookmark")
         }
     }
     

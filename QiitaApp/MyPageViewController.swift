@@ -16,11 +16,7 @@ class MyPageViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        self.tableView.registerNib(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,9 +39,14 @@ class MyPageViewController: UITableViewController {
         return 100
     }
     
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        print("editbutton")
+        return true
+    }
+    
     //テーブルセルの取得処理
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("bookmarkArticleCell", forIndexPath: indexPath) as! BookmarkArticleTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("ArticleTableViewCell", forIndexPath: indexPath) as! ArticleTableViewCell
         let article = self.bookmarkArticles.bookmarks[indexPath.row]
         cell.titleLabel.text = article.title
         cell.userIdLabel.text = article.userId
@@ -93,13 +94,17 @@ class MyPageViewController: UITableViewController {
         self.tableView.reloadData()
     }
 
-    //セルをタップして次の画面に遷移する前の処理
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let cell = sender as? BookmarkArticleTableViewCell {
-            if let articleWebViewController = segue.destinationViewController as? ArticleWebViewController {
-                //商品ページのURLを設定する
-                articleWebViewController.article = cell.article
-            }
-        }
+    //セルがタップされた時に呼ばれるメソッド
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let article = self.bookmarkArticles.bookmarks[indexPath.row]
+        self.performSegueWithIdentifier("ShowToArticleWebViewController", sender: article)
     }
+    
+    
+    //画面遷移時に呼ばれるメソッド
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let articleWebViewController = segue.destinationViewController as! ArticleWebViewController
+        articleWebViewController.article = sender as! Article!
+    }
+    
 }
