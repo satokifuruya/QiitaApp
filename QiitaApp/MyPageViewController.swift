@@ -9,9 +9,11 @@
 import UIKit
 
 class MyPageViewController: UITableViewController {
+    @IBOutlet weak var viewModeButton: UIBarButtonItem!
+    
     
     var bookmarkArticles = BookmarkArticle.sharedInstance
-    var userSettings = UserSettingsModel.sharedInstance
+    var visivbleBookmarkMode = 1 //0はすべて,1は未読のみ表示
     var imageCache = NSCache()
 
     override func viewDidLoad() {
@@ -19,6 +21,17 @@ class MyPageViewController: UITableViewController {
 
         self.tableView.registerNib(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
         navigationItem.leftBarButtonItem = editButtonItem()
+    }
+    
+    @IBAction func tapViewModeButton(sender: UIBarButtonItem) {
+        if visivbleBookmarkMode == 0 {
+            visivbleBookmarkMode = 1
+            viewModeButton.title = "すべて表示"
+        } else {
+            visivbleBookmarkMode = 0
+            viewModeButton.title = "未読を表示"
+        }
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,6 +47,9 @@ class MyPageViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if visivbleBookmarkMode == 1 {
+            return self.bookmarkArticles.unreadBookmarks.count
+        }
         return self.bookmarkArticles.bookmarks.count
     }
 
@@ -45,7 +61,13 @@ class MyPageViewController: UITableViewController {
     //テーブルセルの取得処理
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ArticleTableViewCell", forIndexPath: indexPath) as! ArticleTableViewCell
-        let article = self.bookmarkArticles.bookmarks[indexPath.row]
+        
+        var article = self.bookmarkArticles.bookmarks[indexPath.row]
+        
+        if visivbleBookmarkMode == 1 {
+            article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
+        }
+        
         
         
         cell.titleLabel.text = article.title
@@ -54,6 +76,9 @@ class MyPageViewController: UITableViewController {
         if article.finishReading {
             cell.titleLabel.textColor = UIColor.grayColor()
             cell.userIdLabel.textColor = UIColor.grayColor()
+        } else {
+            cell.titleLabel.textColor = UIColor.blackColor()
+            cell.userIdLabel.textColor = UIColor.blackColor()
         }
         
         cell.article = article
@@ -94,18 +119,22 @@ class MyPageViewController: UITableViewController {
     }
     
     
-    
     //開くとリロード
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
     }
 
+    //TODO: check
     //セルがタップされた時に呼ばれるメソッド
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let article = self.bookmarkArticles.bookmarks[indexPath.row]
+        var article = self.bookmarkArticles.bookmarks[indexPath.row]
+        if visivbleBookmarkMode == 1 {
+            article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
+        }
         self.performSegueWithIdentifier("ShowToArticleWebViewController", sender: article)
     }
+    
     
     //画面遷移時に呼ばれるメソッド
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -115,11 +144,16 @@ class MyPageViewController: UITableViewController {
         segue.destinationViewController.hidesBottomBarWhenPushed = true
     }
     
+    //TODO: check
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         switch editingStyle {
         case .Delete:
             print("delete呼ばれた")
-            bookmarkArticles.removeBookmark(indexPath.row)
+            var article = self.bookmarkArticles.bookmarks[indexPath.row]
+            if  visivbleBookmarkMode == 1{
+                article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
+            }
+            bookmarkArticles.removeBookmark(article)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
         default:
             return
