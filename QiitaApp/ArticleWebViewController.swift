@@ -11,6 +11,7 @@ import WebKit
 
 
 class ArticleWebViewController: UIViewController {
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     //URLではなくArticleを保持するように変更した
     var article: Article!
@@ -25,6 +26,15 @@ class ArticleWebViewController: UIViewController {
         let articleUrl = NSURL(string: self.article.articleUrl)
         let request = NSURLRequest(URL: articleUrl!)
         webView.loadRequest(request)
+        
+        if isStockedArticle() {
+            doneButton.enabled = true
+            doneButton.tintColor = UIColor(red: 0, green: 122/255, blue: 255/255, alpha: 1.0)
+        } else {
+            doneButton.enabled = true
+            doneButton.tintColor = UIColor(red:0, green:0, blue:0, alpha: 0.0)
+        }
+        setDoneButton()
         
     }
     
@@ -43,6 +53,11 @@ class ArticleWebViewController: UIViewController {
         }
     }
     
+    @IBAction func tapDoneButton(sender: UIBarButtonItem) {
+        let finishMessage = bookmarkArticle.changeReadingStatus(self.article)
+        showAlert(finishMessage)
+        setDoneButton()
+    }
     
     func isStockedArticle() -> Bool {
         for myArticle in self.bookmarkArticle.bookmarks {
@@ -51,6 +66,17 @@ class ArticleWebViewController: UIViewController {
             }
         }
         return false
+    }
+    
+    //TODO: check
+    override func viewWillDisappear(animated: Bool) {
+        let viewControllers = self.navigationController?.viewControllers
+        for viewController in viewControllers! {
+            if viewController is MyPageViewController {
+                let myPageController =  viewController as! MyPageViewController
+                myPageController.tableView.reloadData()
+            }
+        }
     }
     
     
@@ -64,6 +90,22 @@ class ArticleWebViewController: UIViewController {
         
         alert.addAction(defaultAction)
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func setDoneButton(){
+        var targetArticle = self.article
+        
+        for myArticle in self.bookmarkArticle.bookmarks {
+            if myArticle.articleUrl == self.article.articleUrl {
+                targetArticle = myArticle
+            }
+        }
+        
+        if targetArticle.finishReading {
+            doneButton.title = "未読へ"
+        } else {
+            doneButton.title = "完了"
+        }
     }
     
     

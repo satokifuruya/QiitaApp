@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Title-->
@@ -24,27 +25,54 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tp1-Nh-UnX" firstAttribute="top" secondItem="BYT-Co-PHE" secondAttribute="top" id="5Ar-Qa-bnD"/>
-                            <constraint firstItem="tp1-Nh-UnX" firstAttribute="leading" secondItem="BYT-Co-PHE" secondAttribute="leading" id="5J2-gi-sZu"/>
-                            <constraint firstAttribute="trailing" secondItem="tp1-Nh-UnX" secondAttribute="trailing" id="UvM-tq-Bi5"/>
-                            <constraint firstItem="Yrm-hB-L3D" firstAttribute="top" secondItem="tp1-Nh-UnX" secondAttribute="bottom" id="rEc-vV-xsA"/>
+                            <constraint firstAttribute="bottom" secondItem="tp1-Nh-UnX" secondAttribute="bottom" id="1tp-wR-HeH"/>
+                            <constraint firstAttribute="trailing" secondItem="tp1-Nh-UnX" secondAttribute="trailing" id="gzb-hL-cN4"/>
+                            <constraint firstItem="tp1-Nh-UnX" firstAttribute="leading" secondItem="BYT-Co-PHE" secondAttribute="leading" id="lVf-M8-sVa"/>
+                            <constraint firstItem="tp1-Nh-UnX" firstAttribute="top" secondItem="BYT-Co-PHE" secondAttribute="top" id="od8-nW-04P"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="ntT-po-4ve">
-                        <barButtonItem key="rightBarButtonItem" systemItem="bookmarks" id="fWX-7d-NjD">
-                            <connections>
-                                <action selector="tapBookmarkButton:" destination="YGO-jc-tfT" id="TqD-wG-aP7"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="bookmarks" id="fWX-7d-NjD">
+                                <connections>
+                                    <action selector="tapBookmarkButton:" destination="YGO-jc-tfT" id="TqD-wG-aP7"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" style="plain" id="u5u-oI-kYv">
+                                <connections>
+                                    <action selector="tapDoneButton:" destination="YGO-jc-tfT" id="JH6-Bj-0uQ"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="doneButton" destination="u5u-oI-kYv" id="fgU-lu-Iqt"/>
                         <outlet property="webView" destination="tp1-Nh-UnX" id="paN-Qk-qmE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hkh-fv-GKz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1552.5" y="889.5"/>
+            <point key="canvasLocation" x="2364.5" y="889.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="vee-gY-9OD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="H9x-Gp-UZ6" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="bM1-iS-TST">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YGO-jc-tfT" kind="relationship" relationship="rootViewController" id="lXc-1U-cgX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Psh-U5-Mi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1789.5" y="889.5"/>
         </scene>
     </scenes>
 </document>

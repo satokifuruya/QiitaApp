@@ -8,7 +8,6 @@
         <!--Article Table View Controller-->
         <scene sceneID="dzA-53-1gT">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Zso-LQ-lx1" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="mwd-nV-8iH" customClass="ArticleTableViewController" customModule="QiitaApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="7SG-d7-qOb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -43,6 +42,7 @@
                         <segue destination="rPo-Dv-SkL" kind="show" identifier="ShowToArticleWebViewController" id="8q1-15-4Vb"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zso-LQ-lx1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1736.5" y="486.5"/>
         </scene>

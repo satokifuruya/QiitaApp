@@ -31,10 +31,16 @@
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="rR8-ks-5rM"/>
                     <navigationItem key="navigationItem" id="a8d-YD-P9I">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="0u5-sJ-bl5"/>
+                        <barButtonItem key="rightBarButtonItem" title="すべて表示" id="VmJ-vP-adj">
+                            <connections>
+                                <action selector="tapViewModeButton:" destination="f5Z-SW-6ef" id="o3h-wZ-eDf"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="viewModeButton" destination="VmJ-vP-adj" id="FHa-UN-f0d"/>
                         <segue destination="a9t-3V-EdS" kind="show" identifier="ShowToArticleWebViewController" id="dxN-a0-9Hq"/>
                     </connections>
                 </tableViewController>
