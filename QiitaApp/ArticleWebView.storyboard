@@ -38,7 +38,7 @@
                                     <action selector="tapBookmarkButton:" destination="YGO-jc-tfT" id="TqD-wG-aP7"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem style="plain" systemItem="done" id="u5u-oI-kYv">
+                            <barButtonItem title="Item" style="plain" id="u5u-oI-kYv">
                                 <connections>
                                     <action selector="tapDoneButton:" destination="YGO-jc-tfT" id="JH6-Bj-0uQ"/>
                                 </connections>

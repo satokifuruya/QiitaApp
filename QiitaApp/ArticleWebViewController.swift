@@ -34,6 +34,7 @@ class ArticleWebViewController: UIViewController {
             doneButton.enabled = true
             doneButton.tintColor = UIColor(red:0, green:0, blue:0, alpha: 0.0)
         }
+        setDoneButton()
         
     }
     
@@ -55,6 +56,7 @@ class ArticleWebViewController: UIViewController {
     @IBAction func tapDoneButton(sender: UIBarButtonItem) {
         let finishMessage = bookmarkArticle.changeReadingStatus(self.article)
         showAlert(finishMessage)
+        setDoneButton()
     }
     
     func isStockedArticle() -> Bool {
@@ -88,6 +90,14 @@ class ArticleWebViewController: UIViewController {
         
         alert.addAction(defaultAction)
         presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func setDoneButton(){
+        if self.article.finishReading{
+            doneButton.title = "未読へ"
+        } else {
+            doneButton.title = "完了"
+        }
     }
     
     

@@ -48,7 +48,7 @@ class BookmarkArticle: NSObject {
         if article.finishReading{
             undoFinishedReading(article)
             getCurrentUnreadBookmarks()
-            return "この記事はまだ読み途中です"
+            return "この記事を未読にしました"
         } else {
             finishedReading(article)
             getCurrentUnreadBookmarks()
