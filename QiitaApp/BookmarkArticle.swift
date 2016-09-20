@@ -44,6 +44,8 @@ class BookmarkArticle: NSObject {
         getCurrentUnreadBookmarks()
     }
     
+    
+    //TODO:不具合、ブクマした記事をmyapge以外から開くと別article扱いになって既読が未読扱いになる
     func changeReadingStatus(article: Article) ->String{
         if article.finishReading{
             undoFinishedReading(article)

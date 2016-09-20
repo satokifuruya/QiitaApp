@@ -93,7 +93,15 @@ class ArticleWebViewController: UIViewController {
     }
     
     func setDoneButton(){
-        if self.article.finishReading{
+        var targetArticle = self.article
+        
+        for myArticle in self.bookmarkArticle.bookmarks {
+            if myArticle.articleUrl == self.article.articleUrl {
+                targetArticle = myArticle
+            }
+        }
+        
+        if targetArticle.finishReading {
             doneButton.title = "未読へ"
         } else {
             doneButton.title = "完了"

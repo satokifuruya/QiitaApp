@@ -8,12 +8,20 @@
 
 import UIKit
 
+
+
+
 class MyPageViewController: UITableViewController {
+
+    enum BookmarkViewType {
+        case All
+        case UnRead
+    }
+    
     @IBOutlet weak var viewModeButton: UIBarButtonItem!
     
-    
     var bookmarkArticles = BookmarkArticle.sharedInstance
-    var visivbleBookmarkMode = 1 //0はすべて,1は未読のみ表示
+    var visivbleBookmarkMode = BookmarkViewType.UnRead
     var imageCache = NSCache()
 
     override func viewDidLoad() {
@@ -24,12 +32,12 @@ class MyPageViewController: UITableViewController {
     }
     
     @IBAction func tapViewModeButton(sender: UIBarButtonItem) {
-        if visivbleBookmarkMode == 0 {
-            visivbleBookmarkMode = 1
+        if visivbleBookmarkMode == .All {
+            visivbleBookmarkMode = .UnRead
             viewModeButton.title = "すべて表示"
         } else {
-            visivbleBookmarkMode = 0
-            viewModeButton.title = "未読を表示"
+            visivbleBookmarkMode = .All
+            viewModeButton.title = "未読のみ表示"
         }
         self.tableView.reloadData()
     }
@@ -47,7 +55,7 @@ class MyPageViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if visivbleBookmarkMode == 1 {
+        if visivbleBookmarkMode == .UnRead {
             return self.bookmarkArticles.unreadBookmarks.count
         }
         return self.bookmarkArticles.bookmarks.count
@@ -64,10 +72,9 @@ class MyPageViewController: UITableViewController {
         
         var article = self.bookmarkArticles.bookmarks[indexPath.row]
         
-        if visivbleBookmarkMode == 1 {
+        if visivbleBookmarkMode == .UnRead {
             article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
         }
-        
         
         
         cell.titleLabel.text = article.title
@@ -129,7 +136,7 @@ class MyPageViewController: UITableViewController {
     //セルがタップされた時に呼ばれるメソッド
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var article = self.bookmarkArticles.bookmarks[indexPath.row]
-        if visivbleBookmarkMode == 1 {
+        if visivbleBookmarkMode == .UnRead {
             article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
         }
         self.performSegueWithIdentifier("ShowToArticleWebViewController", sender: article)
@@ -150,7 +157,7 @@ class MyPageViewController: UITableViewController {
         case .Delete:
             print("delete呼ばれた")
             var article = self.bookmarkArticles.bookmarks[indexPath.row]
-            if  visivbleBookmarkMode == 1{
+            if  visivbleBookmarkMode == .UnRead {
                 article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
             }
             bookmarkArticles.removeBookmark(article)
