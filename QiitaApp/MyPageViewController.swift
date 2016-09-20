@@ -11,6 +11,7 @@ import UIKit
 class MyPageViewController: UITableViewController {
     
     var bookmarkArticles = BookmarkArticle.sharedInstance
+    var userSettings = UserSettingsModel.sharedInstance
     var imageCache = NSCache()
 
     override func viewDidLoad() {
@@ -47,6 +48,11 @@ class MyPageViewController: UITableViewController {
         let article = self.bookmarkArticles.bookmarks[indexPath.row]
         cell.titleLabel.text = article.title
         cell.userIdLabel.text = article.userId
+        
+        if article.finishReading {
+            cell.titleLabel.textColor = UIColor.grayColor()
+            cell.userIdLabel.textColor = UIColor.grayColor()
+        }
         
         cell.article = article
         

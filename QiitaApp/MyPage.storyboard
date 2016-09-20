@@ -31,6 +31,7 @@
                     <tabBarItem key="tabBarItem" systemItem="favorites" id="rR8-ks-5rM"/>
                     <navigationItem key="navigationItem" id="a8d-YD-P9I">
                         <barButtonItem key="leftBarButtonItem" systemItem="edit" id="0u5-sJ-bl5"/>
+                        <barButtonItem key="rightBarButtonItem" title="アーカイブ" id="VmJ-vP-adj"/>
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

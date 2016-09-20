@@ -43,6 +43,10 @@ class ArticleWebViewController: UIViewController {
         }
     }
     
+    @IBAction func tapDoneButton(sender: UIBarButtonItem) {
+        let finishMessage = bookmarkArticle.changeReadingStatus(self.article)
+        showAlert(finishMessage)
+    }
     
     func isStockedArticle() -> Bool {
         for myArticle in self.bookmarkArticle.bookmarks {

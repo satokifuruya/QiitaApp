@@ -14,7 +14,10 @@ class BookmarkArticle: NSObject {
     static let sharedInstance =  BookmarkArticle()
     var bookmarks : Array<Article> = []
     
-
+    private override init() {
+        //シングルトンであることを保証するためにprivateで宣言しておく
+    }
+    
     func getMyBookmarkArticles(){
         let realm = try! Realm()
         
@@ -32,6 +35,38 @@ class BookmarkArticle: NSObject {
         let targetArticle = self.bookmarks[index]
         self.bookmarks.removeAtIndex(index)
         removeBookmarArticleFromRealm(targetArticle)
+    }
+    
+    func changeReadingStatus(article: Article) ->String{
+        if article.finishReading{
+            undoFinishedReading(article)
+            return "この記事はまだ読み途中です"
+        } else {
+            finishedReading(article)
+            return "この記事を読み終えました"
+        }
+    }
+    
+    private func finishedReading(article: Article){
+        let realm = try! Realm()
+        if let targetArticle = realm.objects(Article).filter("articleUrl = %@", article.articleUrl).first {
+            try! realm.write {
+                targetArticle.finishReading = true
+            }
+        } else {
+            print("not found bookmark")
+        }
+    }
+    
+    private func undoFinishedReading(article: Article){
+        let realm = try! Realm()
+        if let targetArticle = realm.objects(Article).filter("articleUrl = %@", article.articleUrl).first {
+            try! realm.write {
+                targetArticle.finishReading = false
+            }
+        } else {
+            print("not found bookmark")
+        }
     }
     
     private func addBookmarkArticleToRealm(article: Article){
