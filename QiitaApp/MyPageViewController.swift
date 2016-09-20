@@ -46,6 +46,8 @@ class MyPageViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ArticleTableViewCell", forIndexPath: indexPath) as! ArticleTableViewCell
         let article = self.bookmarkArticles.bookmarks[indexPath.row]
+        
+        
         cell.titleLabel.text = article.title
         cell.userIdLabel.text = article.userId
         
@@ -91,6 +93,8 @@ class MyPageViewController: UITableViewController {
         return cell
     }
     
+    
+    
     //開くとリロード
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -108,6 +112,7 @@ class MyPageViewController: UITableViewController {
         let articleWebViewController = segue.destinationViewController as! ArticleWebViewController
         articleWebViewController.article = sender as! Article!
         articleWebViewController.navigationItem.title = sender?.title
+        segue.destinationViewController.hidesBottomBarWhenPushed = true
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {

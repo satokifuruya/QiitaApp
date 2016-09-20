@@ -11,6 +11,7 @@ import WebKit
 
 
 class ArticleWebViewController: UIViewController {
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     //URLではなくArticleを保持するように変更した
     var article: Article!
@@ -25,6 +26,14 @@ class ArticleWebViewController: UIViewController {
         let articleUrl = NSURL(string: self.article.articleUrl)
         let request = NSURLRequest(URL: articleUrl!)
         webView.loadRequest(request)
+        
+        if isStockedArticle() {
+            doneButton.enabled = true
+            doneButton.tintColor = UIColor(red: 0, green: 122/255, blue: 255/255, alpha: 1.0)
+        } else {
+            doneButton.enabled = true
+            doneButton.tintColor = UIColor(red:0, green:0, blue:0, alpha: 0.0)
+        }
         
     }
     

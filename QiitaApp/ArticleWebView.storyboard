@@ -47,6 +47,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="doneButton" destination="u5u-oI-kYv" id="fgU-lu-Iqt"/>
                         <outlet property="webView" destination="tp1-Nh-UnX" id="paN-Qk-qmE"/>
                     </connections>
                 </viewController>
@@ -57,7 +58,6 @@
         <!--Navigation Controller-->
         <scene sceneID="vee-gY-9OD">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Psh-U5-Mi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="H9x-Gp-UZ6" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -70,6 +70,7 @@
                         <segue destination="YGO-jc-tfT" kind="relationship" relationship="rootViewController" id="lXc-1U-cgX"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Psh-U5-Mi3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1789.5" y="889.5"/>
         </scene>
