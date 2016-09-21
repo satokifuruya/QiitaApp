@@ -60,25 +60,13 @@ class ArticleWebViewController: UIViewController {
     }
     
     func isStockedArticle() -> Bool {
-        for myArticle in self.bookmarkArticle.bookmarks {
+        for myArticle in self.bookmarkArticle.bookmarks! {
             if myArticle.articleUrl == self.article.articleUrl {
                 return true
             }
         }
         return false
     }
-    
-    //TODO: check
-    override func viewWillDisappear(animated: Bool) {
-        let viewControllers = self.navigationController?.viewControllers
-        for viewController in viewControllers! {
-            if viewController is MyPageViewController {
-                let myPageController =  viewController as! MyPageViewController
-                myPageController.tableView.reloadData()
-            }
-        }
-    }
-    
     
     // ボタンを押下した時にアラートを表示するメソッド
     func showAlert(text: String) {
@@ -95,7 +83,7 @@ class ArticleWebViewController: UIViewController {
     func setDoneButton(){
         var targetArticle = self.article
         
-        for myArticle in self.bookmarkArticle.bookmarks {
+        for myArticle in self.bookmarkArticle.bookmarks! {
             if myArticle.articleUrl == self.article.articleUrl {
                 targetArticle = myArticle
             }

@@ -12,8 +12,9 @@ import RealmSwift
 class BookmarkArticle: NSObject {
 
     static let sharedInstance =  BookmarkArticle()
-    var bookmarks : Array<Article> = []
-    var unreadBookmarks: Array<Article> = []
+    var bookmarks :Results<Article>?
+    var unreadBookmarks :Results<Article>?
+    var token: NotificationToken?
     
     private override init() {
         //シングルトンであることを保証するためにprivateで宣言しておく
@@ -21,27 +22,29 @@ class BookmarkArticle: NSObject {
     
     func getMyBookmarkArticles(){
         let realm = try! Realm()
+        self.bookmarks = realm.objects(Article)
+        self.unreadBookmarks = self.bookmarks!.filter("finishReading = false")
         
-        for realmArticle in realm.objects(Article) {
-            self.bookmarks.insert(realmArticle, atIndex: 0)
+        //realm.objects(Article)のオブジェクトが更新されたら通知
+        token = realm.objects(Article).addNotificationBlock() { (changes: RealmCollectionChange) in
+            switch changes {
+            case .Initial:
+                break
+            case .Update:
+                NSNotificationCenter.defaultCenter().postNotificationName("UpdateBookmarksNotification", object: nil)
+            case .Error:
+                break
+            }
         }
-        getCurrentUnreadBookmarks()
-        
     }
     
     func addBookmarkArticle(article: Article){
-        self.bookmarks.insert(article, atIndex: 0)
         addBookmarkArticleToRealm(article)
-        getCurrentUnreadBookmarks()
     }
     
     //TODO: check
     func removeBookmark(article: Article){
-        let tagetIndex = self.bookmarks.indexOf(article)!
-        let targetArticle = self.bookmarks[tagetIndex]
-        self.bookmarks.removeAtIndex(tagetIndex)
-        removeBookmarArticleFromRealm(targetArticle)
-        getCurrentUnreadBookmarks()
+        removeBookmarArticleFromRealm(article)
     }
     
     
@@ -49,25 +52,13 @@ class BookmarkArticle: NSObject {
     func changeReadingStatus(article: Article) ->String{
         if article.finishReading{
             undoFinishedReading(article)
-            getCurrentUnreadBookmarks()
             return "この記事を未読にしました"
         } else {
             finishedReading(article)
-            getCurrentUnreadBookmarks()
             return "この記事を読み終えました"
         }
     }
     
-    
-    private func getCurrentUnreadBookmarks() {
-        self.unreadBookmarks.removeAll()
-        let allBookmarks = self.bookmarks
-        for alrticle in allBookmarks {
-            if !(alrticle.finishReading){
-                self.unreadBookmarks.append(alrticle)
-            }
-        }
-    }
     
     private func finishedReading(article: Article){
         let realm = try! Realm()

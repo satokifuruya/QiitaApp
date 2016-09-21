@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 自動的にマイグレーションが実行されます。
             migrationBlock: { migration, oldSchemaVersion in
                 // 最初のマイグレーションの場合、`oldSchemaVersion`は0です
-                if (oldSchemaVersion < 1) {
+                if (oldSchemaVersion < 2) {
                     // 何もする必要はありません！
                     // Realmは自動的に新しく追加されたプロパティと、削除されたプロパティを認識します。
                     // そしてディスク上のスキーマを自動的にアップデートします。

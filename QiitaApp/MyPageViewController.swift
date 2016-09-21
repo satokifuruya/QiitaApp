@@ -8,9 +8,6 @@
 
 import UIKit
 
-
-
-
 class MyPageViewController: UITableViewController {
 
     enum BookmarkViewType {
@@ -29,6 +26,17 @@ class MyPageViewController: UITableViewController {
 
         self.tableView.registerNib(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
         navigationItem.leftBarButtonItem = editButtonItem()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(bookmarkDidChange(_:)), name: "UpdateBookmarksNotification", object: nil)
+    }
+    
+    internal func bookmarkDidChange(notification: NSNotification) {
+        print("再描画！")
+        self.tableView.reloadData()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     @IBAction func tapViewModeButton(sender: UIBarButtonItem) {
@@ -56,9 +64,9 @@ class MyPageViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if visivbleBookmarkMode == .UnRead {
-            return self.bookmarkArticles.unreadBookmarks.count
+            return self.bookmarkArticles.unreadBookmarks!.count
         }
-        return self.bookmarkArticles.bookmarks.count
+        return self.bookmarkArticles.bookmarks!.count
     }
 
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -70,10 +78,10 @@ class MyPageViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("ArticleTableViewCell", forIndexPath: indexPath) as! ArticleTableViewCell
         
-        var article = self.bookmarkArticles.bookmarks[indexPath.row]
+        var article = self.bookmarkArticles.bookmarks![indexPath.row]
         
         if visivbleBookmarkMode == .UnRead {
-            article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
+            article = self.bookmarkArticles.unreadBookmarks![indexPath.row]
         }
         
         
@@ -135,9 +143,9 @@ class MyPageViewController: UITableViewController {
     //TODO: check
     //セルがタップされた時に呼ばれるメソッド
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var article = self.bookmarkArticles.bookmarks[indexPath.row]
+        var article = self.bookmarkArticles.bookmarks![indexPath.row]
         if visivbleBookmarkMode == .UnRead {
-            article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
+            article = self.bookmarkArticles.unreadBookmarks![indexPath.row]
         }
         self.performSegueWithIdentifier("ShowToArticleWebViewController", sender: article)
     }
@@ -156,9 +164,9 @@ class MyPageViewController: UITableViewController {
         switch editingStyle {
         case .Delete:
             print("delete呼ばれた")
-            var article = self.bookmarkArticles.bookmarks[indexPath.row]
+            var article = self.bookmarkArticles.bookmarks![indexPath.row]
             if  visivbleBookmarkMode == .UnRead {
-                article = self.bookmarkArticles.unreadBookmarks[indexPath.row]
+                article = self.bookmarkArticles.unreadBookmarks![indexPath.row]
             }
             bookmarkArticles.removeBookmark(article)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
