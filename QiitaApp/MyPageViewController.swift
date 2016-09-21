@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MyPageViewController: UITableViewController {
 
@@ -20,6 +21,7 @@ class MyPageViewController: UITableViewController {
     var bookmarkArticles = BookmarkArticle.sharedInstance
     var visivbleBookmarkMode = BookmarkViewType.UnRead
     var imageCache = NSCache()
+    var token: NotificationToken?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,16 +29,23 @@ class MyPageViewController: UITableViewController {
         self.tableView.registerNib(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
         navigationItem.leftBarButtonItem = editButtonItem()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(bookmarkDidChange(_:)), name: "UpdateBookmarksNotification", object: nil)
+        setRealmNotification()
+        
     }
     
-    internal func bookmarkDidChange(notification: NSNotification) {
-        print("再描画！")
-        self.tableView.reloadData()
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    private func setRealmNotification() {
+        //realm.objects(Article)のオブジェクトが更新されたら通知
+        let realm = try! Realm()
+        token = realm.objects(Article).addNotificationBlock() { (changes: RealmCollectionChange) in
+            switch changes {
+            case .Initial:
+                break
+            case .Update:
+                self.tableView.reloadData()
+            case .Error:
+                break
+            }
+        }
     }
     
     @IBAction func tapViewModeButton(sender: UIBarButtonItem) {
