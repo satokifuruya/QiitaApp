@@ -8,9 +8,6 @@
 
 import UIKit
 
-
-
-
 class MyPageViewController: UITableViewController {
 
     enum BookmarkViewType {
@@ -29,6 +26,17 @@ class MyPageViewController: UITableViewController {
 
         self.tableView.registerNib(UINib(nibName: "ArticleTableViewCell", bundle: nil), forCellReuseIdentifier: "ArticleTableViewCell")
         navigationItem.leftBarButtonItem = editButtonItem()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(bookmarkDidChange(_:)), name: "UpdateBookmarksNotification", object: nil)
+    }
+    
+    internal func bookmarkDidChange(notification: NSNotification) {
+        print("再描画！")
+        self.tableView.reloadData()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     @IBAction func tapViewModeButton(sender: UIBarButtonItem) {
