@@ -22,20 +22,15 @@ class ArticleWebViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setBookmartArticle()
+        
         //WebViewのurlを読み込ませてWebページを表示させる
         let articleUrl = NSURL(string: self.article.articleUrl)
         let request = NSURLRequest(URL: articleUrl!)
         webView.loadRequest(request)
         
-        if isStockedArticle() {
-            doneButton.enabled = true
-            doneButton.tintColor = UIColor(red: 0, green: 122/255, blue: 255/255, alpha: 1.0)
-        } else {
-            doneButton.enabled = true
-            doneButton.tintColor = UIColor(red:0, green:0, blue:0, alpha: 0.0)
-        }
         setDoneButton()
-        
+        setBookmarkButton()
     }
     
     override func didReceiveMemoryWarning() {
@@ -49,8 +44,8 @@ class ArticleWebViewController: UIViewController {
         } else {
             self.bookmarkArticle.addBookmarkArticle(article)
             showAlert("ブックマークに保存しました。")
-            
         }
+        setBookmarkButton()
     }
     
     @IBAction func tapDoneButton(sender: UIBarButtonItem) {
@@ -68,6 +63,15 @@ class ArticleWebViewController: UIViewController {
         return false
     }
     
+    //もしブックマークされている記事だったら、ブックマークからインスタンスを取得する
+    func setBookmartArticle() {
+        for myArticle in self.bookmarkArticle.bookmarks! {
+            if myArticle.articleUrl == self.article.articleUrl {
+                self.article = myArticle
+            }
+        }
+    }
+    
     // ボタンを押下した時にアラートを表示するメソッド
     func showAlert(text: String) {
         let alert: UIAlertController = UIAlertController(title: text, message: nil, preferredStyle:  UIAlertControllerStyle.Alert)
@@ -81,21 +85,22 @@ class ArticleWebViewController: UIViewController {
     }
     
     func setDoneButton(){
-        var targetArticle = self.article
-        
-        for myArticle in self.bookmarkArticle.bookmarks! {
-            if myArticle.articleUrl == self.article.articleUrl {
-                targetArticle = myArticle
-            }
-        }
-        
-        if targetArticle.finishReading {
+        if self.article.finishReading {
             doneButton.title = "未読へ"
         } else {
             doneButton.title = "完了"
         }
     }
     
+    func setBookmarkButton(){
+        if isStockedArticle() {
+            doneButton.enabled = true
+            doneButton.tintColor = UIColor(red: 0, green: 122/255, blue: 255/255, alpha: 1.0)
+        } else {
+            doneButton.enabled = true
+            doneButton.tintColor = UIColor(red:0, green:0, blue:0, alpha: 0.0)
+        }
+    }
     
     
 }
