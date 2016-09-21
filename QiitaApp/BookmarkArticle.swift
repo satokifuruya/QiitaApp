@@ -22,7 +22,7 @@ class BookmarkArticle: NSObject {
     
     func getMyBookmarkArticles(){
         let realm = try! Realm()
-        self.bookmarks = realm.objects(Article)
+        self.bookmarks = realm.objects(Article).sorted("createdAt", ascending: false)
         self.unreadBookmarks = self.bookmarks!.filter("finishReading = false")
         
         //realm.objects(Article)のオブジェクトが更新されたら通知

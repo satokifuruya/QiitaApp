@@ -17,4 +17,6 @@ class Article: Object {
     
     //読み終わったかどうかを表すフラグ
     dynamic var finishReading :Bool = false
+    //bookmarkの挿入順でのソート用
+    dynamic var createdAt = NSDate()
 }
