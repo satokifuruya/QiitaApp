@@ -60,7 +60,7 @@ class ArticleWebViewController: UIViewController {
     }
     
     func isStockedArticle() -> Bool {
-        for myArticle in self.bookmarkArticle.bookmarks {
+        for myArticle in self.bookmarkArticle.bookmarks! {
             if myArticle.articleUrl == self.article.articleUrl {
                 return true
             }
@@ -95,7 +95,7 @@ class ArticleWebViewController: UIViewController {
     func setDoneButton(){
         var targetArticle = self.article
         
-        for myArticle in self.bookmarkArticle.bookmarks {
+        for myArticle in self.bookmarkArticle.bookmarks! {
             if myArticle.articleUrl == self.article.articleUrl {
                 targetArticle = myArticle
             }
