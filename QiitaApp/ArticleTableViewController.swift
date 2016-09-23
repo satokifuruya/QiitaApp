@@ -8,12 +8,13 @@
 
 import UIKit
 import Alamofire
+import AlamofireImage
 import SwiftyJSON
+
 
 class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
     
     var articleArray = [Article]()
-    var imageCache = NSCache()
     var searchBar: UISearchBar!
     
     let baseUrl: String = "https://qiita.com/api/v2/items"
@@ -178,41 +179,16 @@ class ArticleTableViewController: UITableViewController, UISearchBarDelegate {
         let article = articleArray[indexPath.row]
         cell.titleLabel.text = article.title
         cell.userIdLabel.text = article.userId
-        
+        //ArticleTableViewCellに記事をセット(webへの画面遷移用)
         cell.article = article
-        
-        //画像処理↓
-        //画像がまだ設定されていない場合に処理を行なう
-        let iconImageUrl = article.iconImageUrl
-        //キャッシュの画像を取り出す
-        if let cacheImage = imageCache.objectForKey(iconImageUrl) as? UIImage {
-            //キャッシュの画像を設定
-            cell.iconImage.image = cacheImage
-        } else {
-            //画像のダウンロード処理
-            let session = NSURLSession.sharedSession()
-            if let url = NSURL(string: iconImageUrl){
-                let request = NSURLRequest(URL: url)
-                let task = session.dataTaskWithRequest(
-                    request, completionHandler: {
-                        (data:NSData?, response:NSURLResponse?, error:NSError?) -> Void in
-                        if let data = data {
-                            if let image = UIImage(data: data) {
-                                //ダウンロードした画像をキャッシュに登録しておく
-                                self.imageCache.setObject(image, forKey: iconImageUrl)
-                                //画像はメインスレッド上で設定する
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    cell.iconImage.image = image
-                                })
-                            }
-                        }
-                })
-                //画像の読み込み処理開始
-                task.resume()
-            }
-        
-        }
-        //画像ここまで
+
+        //画像
+        let iconImageUrl = NSURL(string: article.iconImageUrl)!
+        cell.iconImage!.af_setImageWithURL(
+            iconImageUrl,
+            placeholderImage: UIImage(named: "qiita_default")
+        )
+
         return cell
     }
     
