@@ -12,11 +12,6 @@ import AlamofireImage
 
 class MyPageViewController: UITableViewController {
 
-    enum BookmarkViewType {
-        case All
-        case UnRead
-    }
-    
     @IBOutlet weak var viewModeButton: UIBarButtonItem!
     
     var bookmarkArticles = BookmarkArticle.sharedInstance
@@ -51,10 +46,10 @@ class MyPageViewController: UITableViewController {
     @IBAction func tapViewModeButton(sender: UIBarButtonItem) {
         if visivbleBookmarkMode == .All {
             visivbleBookmarkMode = .UnRead
-            viewModeButton.title = "すべて表示"
+            viewModeButton.title = BookmarkViewType.All.getTitle()
         } else {
             visivbleBookmarkMode = .All
-            viewModeButton.title = "未読のみ表示"
+            viewModeButton.title = BookmarkViewType.UnRead.getTitle()
         }
         self.tableView.reloadData()
     }
